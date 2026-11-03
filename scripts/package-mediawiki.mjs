@@ -21,7 +21,10 @@ const thirdParty = ['react', 'react-dom', 'scheduler', '@radix-ui/react-slot', '
   '@fontsource-variable/oswald', '@fontsource-variable/rubik', '@fontsource-variable/inconsolata'];
 await mkdir(join(out, 'licenses'), { recursive: true });
 for (const dependency of thirdParty) {
-  await cp(join(root, 'node_modules', dependency, 'LICENSE'), join(out, 'licenses', dependency.replaceAll('/', '-') + '.txt'), { recursive: false });
+  const directory = join(root, 'node_modules', dependency);
+  const license = (await readdir(directory)).find(name => /^licen[cs]e(?:\.(?:txt|md))?$/i.test(name));
+  if (!license) throw new Error('Missing dependency license: ' + dependency);
+  await cp(join(directory, license), join(out, 'licenses', dependency.replaceAll('/', '-') + '.txt'), { recursive: false });
 }
 await writeFile(join(out, 'package.json'), JSON.stringify({
   name: 'dui-mediawiki', version: pkg.version, private: true, type: 'module',
