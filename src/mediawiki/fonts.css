@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Oswald Variable'; font-style: normal; font-display: swap; font-weight: 200 700;
+  src: url('@fontsource-variable/oswald/files/oswald-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Rubik Variable'; font-style: normal; font-display: swap; font-weight: 300 900;
+  src: url('@fontsource-variable/rubik/files/rubik-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inconsolata Variable'; font-style: normal; font-display: swap; font-weight: 200 900;
+  src: url('@fontsource-variable/inconsolata/files/inconsolata-latin-wght-normal.woff2') format('woff2');
+}

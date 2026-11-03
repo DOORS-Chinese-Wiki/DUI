@@ -1,0 +1,14 @@
+.stage {
+  --doors-color-cream: #ffdebd;
+  min-height: 15rem;
+  padding: 2.5rem 1rem 1.5rem;
+  border-radius: var(--doors-radius-lg);
+  background: #160f16 url('/assets/doors/backgrounds/site-dark.webp') center / cover;
+}
+
+.status {
+  min-height: 1.5rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  text-align: center;
+}

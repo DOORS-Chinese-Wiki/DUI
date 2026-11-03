@@ -1,0 +1,5 @@
+.tabs { width: 100%; min-width: 0; }
+.list { padding: 0.5rem; border: 2px solid var(--doors-color-cream); border-radius: var(--doors-radius-lg); background: var(--doors-settings-background); overflow-x: auto; }
+.list > button { flex: 0 0 auto; }
+.content { min-width: 0; padding: 1.25rem 0.25rem 0; }
+.content[hidden] { display: none; }

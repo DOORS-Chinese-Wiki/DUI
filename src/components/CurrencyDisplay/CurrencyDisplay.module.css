@@ -1,0 +1,4 @@
+.currency { min-width: 0; color: var(--doors-color-cream); white-space: nowrap; }
+.amount { color: inherit; font-family: var(--doors-font-label); font-size: 1.6rem; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.small .amount { font-size: 1.1rem; }
+.group { min-width: 0; }

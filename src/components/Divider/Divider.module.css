@@ -1,0 +1,46 @@
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--doors-space-sm);
+  flex: 0 0 auto;
+  margin: 0;
+  border: 0;
+  color: var(--doors-color-quiet);
+}
+
+.horizontal {
+  width: 100%;
+  min-height: 1px;
+}
+
+.horizontal::before,
+.horizontal::after {
+  height: 1px;
+  flex: 1;
+  background: currentColor;
+  content: "";
+}
+
+.vertical {
+  align-self: stretch;
+  width: 1px;
+  min-height: 1rem;
+  background: currentColor;
+}
+
+.subtle {
+  color: var(--doors-line-subtle);
+}
+
+.accent {
+  color: var(--doors-color-brass);
+}
+
+.label {
+  flex: 0 0 auto;
+  font-family: var(--doors-font-label);
+  font-size: var(--doors-text-caption);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}

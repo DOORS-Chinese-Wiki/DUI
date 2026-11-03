@@ -1,0 +1,10 @@
+<includeonly>{{#tag:div
+|{{{后备文字|DOORS 组件加载中…}}}
+|class=dui-widget
+|data-dui={{{组件|button}}}
+|data-dui-props={{{参数|}}}
+}}</includeonly><noinclude>
+用法：
+<pre>{{DUI|组件=button|参数={"label":"开始游戏"}|后备文字=开始游戏}}</pre>
+参数填写 JSON。界面脚本由管理员通过 Common.js 或 Gadget 安装。
+</noinclude>

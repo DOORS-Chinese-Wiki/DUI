@@ -1,0 +1,2 @@
+.dialog { position: fixed; inset: 0; width: min(36rem, calc(100vw - 2rem)); max-width: calc(100vw - 2rem); max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 0; border-radius: var(--doors-radius-sm); color: var(--doors-color-cream); background: transparent; overflow: auto; overscroll-behavior: contain; }
+.dialog::backdrop { background: rgb(10 5 3 / 75%); backdrop-filter: blur(5px); }

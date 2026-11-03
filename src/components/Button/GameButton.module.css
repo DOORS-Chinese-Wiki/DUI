@@ -1,0 +1,45 @@
+.button {
+  --doors-color-cream: #ffdebd;
+  --doors-color-ink: #452719;
+  --lobby-button-scale: 1;
+  --game-motion-duration: 240ms;
+  --game-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  flex: 0 0 auto;
+  width: calc(var(--lobby-button-width, 5.5rem) * var(--lobby-button-scale));
+  height: calc(var(--lobby-button-height, 5.5rem) * var(--lobby-button-scale));
+  min-height: 0;
+  border: 3px solid var(--doors-color-cream);
+  border-radius: calc(var(--lobby-button-radius, 1.75rem) * var(--lobby-button-scale));
+  color: var(--doors-color-cream);
+  background: rgb(30 18 12 / 90%);
+  transition: width var(--game-motion-duration) var(--game-motion-ease),
+    height var(--game-motion-duration) var(--game-motion-ease),
+    border-radius var(--game-motion-duration) var(--game-motion-ease),
+    color 160ms ease-out, background-color 160ms ease-out, border-color 160ms ease-out;
+}
+.button > span {
+  transform: scale(var(--lobby-button-scale));
+  transition: transform var(--game-motion-duration) var(--game-motion-ease);
+}
+.button:not(:disabled):focus-visible {
+  --lobby-button-scale: var(--game-hover-scale, 1.14);
+  --lobby-code-cutout: var(--doors-color-cream);
+  z-index: 1;
+  border-color: var(--game-hover-border, var(--doors-color-ink));
+  color: var(--game-hover-color, var(--doors-color-ink));
+  background: var(--game-hover-background, var(--doors-color-cream));
+}
+@media (hover: hover) {
+  .button:not(:disabled):hover {
+    --lobby-button-scale: var(--game-hover-scale, 1.14);
+    --lobby-code-cutout: var(--doors-color-cream);
+    z-index: 1;
+    border-color: var(--game-hover-border, var(--doors-color-ink));
+    color: var(--game-hover-color, var(--doors-color-ink));
+    background: var(--game-hover-background, var(--doors-color-cream));
+  }
+}
+.button:disabled { opacity: 0.5; }
+@media (prefers-reduced-motion: reduce) {
+  .button, .button > span { transition: none; }
+}

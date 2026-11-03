@@ -1,0 +1,10 @@
+.soundDemo { display: grid; min-height: 14rem; padding: 1rem; gap: 1.2rem; align-content: center; }
+.demoEyebrow { color: #d0ae82; font-size: 0.68rem; letter-spacing: 0.08em; }
+.soundDemo h4 { margin: 0.4rem 0; color: #f7ddbe; font-size: 1.5rem; font-weight: 500; }
+.soundDemo p { margin: 0; color: var(--doc-muted); font-size: 0.8rem; }
+
+.soundDemo output {
+  color: #d0ae82;
+  font-family: var(--doors-font-code);
+  font-size: 0.8rem;
+}

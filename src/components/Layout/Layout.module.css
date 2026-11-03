@@ -1,0 +1,36 @@
+.layout {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.prose {
+  max-width: 46rem;
+}
+
+.content {
+  max-width: 72rem;
+}
+
+.wide {
+  max-width: 90rem;
+}
+
+.full {
+  max-width: none;
+}
+
+.none {
+  padding-inline: 0;
+}
+
+.compact {
+  padding-inline: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.default {
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+.spacious {
+  padding-inline: clamp(1.25rem, 7vw, 6rem);
+}

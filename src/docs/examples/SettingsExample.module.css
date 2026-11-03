@@ -1,0 +1,285 @@
+.settingsPreview {
+  width: min(38rem, 100%);
+  margin-inline: auto;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: var(--doors-border-heavy);
+  border-radius: var(--doors-radius-sm);
+  background: var(--doors-settings-background);
+}
+
+.gameStage {
+  width: min(64rem, 100%);
+  margin-inline: auto;
+  padding: clamp(1rem, 3vw, 2rem);
+  border: var(--doors-border-heavy);
+  border-radius: var(--doors-radius-lg);
+  background: var(--doors-color-char);
+}
+
+.gameHud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--doors-space-md);
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--doors-space-lg);
+}
+
+.gameWorkspace {
+  display: grid;
+  grid-template-columns: auto minmax(0, 38rem);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  justify-content: center;
+}
+
+.quickDock {
+  align-items: center;
+}
+
+.quickButton {
+  width: 5.5rem;
+  min-height: 5.5rem;
+}
+
+.quickButton > span {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+}
+
+.settingsHeader {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+}
+
+.settingsTitle {
+  font-size: 2.5rem;
+}
+
+.settingsClose {
+  width: 4rem;
+  min-height: 4rem;
+  color: var(--doors-color-cream);
+  font-family: var(--doors-font-label);
+  font-size: 2.6rem;
+  line-height: 0.8;
+}
+
+.settingsBand {
+  display: flex;
+  width: calc(100% + 1.5rem);
+  height: 3.25rem;
+  margin-inline: -0.75rem;
+  padding-inline: 0.75rem;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: var(--doors-radius-sm);
+  color: var(--doors-color-cream);
+  background: var(--doors-color-cocoa);
+  font-family: var(--doors-font-body);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+  text-align: left;
+}
+
+.settingsRows {
+  padding-inline: 0.85rem;
+}
+
+.settingsRows > * {
+  border-bottom: 1px solid var(--doors-color-cocoa);
+}
+
+.settingsRows > :last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 1020px) {
+
+  .gameWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .quickDock {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.settingsScene {
+  --doors-color-cream: #ffdebd;
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(rgb(22 10 8 / 32%), rgb(22 10 8 / 56%)),
+    url('/assets/doors/backgrounds/settings-room.png') center / cover;
+}
+
+.settingsScene .gameWorkspace {
+  --settings-unit: clamp(0.28px, calc((100cqw - 3rem) / 950), 1px);
+  --doors-control-label-size: calc(50 * var(--settings-unit));
+  --doors-slider-height: calc(60 * var(--settings-unit));
+  --doors-slider-thumb-width: calc(24 * var(--settings-unit));
+  --doors-slider-dot-inset: calc(32 * var(--settings-unit));
+  --doors-slider-dot-size: calc(10 * var(--settings-unit));
+  --doors-slider-edge-inset: 0px;
+  --doors-slider-filled-track: #5a3a33;
+  --doors-switch-width: calc(146 * var(--settings-unit));
+  --doors-switch-height: calc(60 * var(--settings-unit));
+  --doors-switch-inactive-track: #301e1a;
+  --doors-switch-inactive-thumb: #79564a;
+  display: grid;
+  min-height: calc(1009 * var(--settings-unit));
+  padding: calc(48 * var(--settings-unit)) calc(24 * var(--settings-unit));
+  grid-template-columns: calc(176 * var(--settings-unit)) calc(734 * var(--settings-unit));
+  gap: calc(40 * var(--settings-unit));
+  align-items: center;
+  justify-content: center;
+}
+
+.settingsScene .settingsPreview {
+  width: calc(734 * var(--settings-unit));
+  height: calc(915 * var(--settings-unit));
+  margin: 0;
+  padding: calc(22 * var(--settings-unit));
+  border: max(1px, calc(3 * var(--settings-unit))) solid #ffdebd;
+  border-radius: calc(10 * var(--settings-unit));
+  background: #1e1110;
+}
+
+.settingsScene .settingsHeader {
+  height: calc(140 * var(--settings-unit));
+  padding: 0 0 calc(52 * var(--settings-unit));
+  gap: calc(20 * var(--settings-unit));
+}
+
+.settingsScene .settingsTitle {
+  margin: 0;
+  color: #ffdebd;
+  font-family: var(--doors-font-body);
+  font-size: calc(72 * var(--settings-unit));
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.settingsScene .settingsClose {
+  width: calc(88 * var(--settings-unit));
+  height: calc(88 * var(--settings-unit));
+  min-height: 0;
+  padding: 0;
+  color: #ffdebd;
+}
+
+.settingsScene .settingsClose > span,
+.settingsScene .settingsClose > span > span {
+  width: 100%;
+  height: 100%;
+}
+
+.settingsScene .settingsBand {
+  width: 100%;
+  height: calc(74 * var(--settings-unit));
+  margin: 0;
+  padding-inline: calc(22 * var(--settings-unit));
+  border-radius: calc(15 * var(--settings-unit));
+  color: #ffdebd;
+  background: #3a2421;
+  font-size: calc(40 * var(--settings-unit));
+  font-weight: 700;
+}
+
+.settingsScene .settingsRows {
+  padding: calc(7 * var(--settings-unit)) calc(15 * var(--settings-unit))
+    calc(7 * var(--settings-unit)) calc(33 * var(--settings-unit));
+}
+
+.settingsScene .settingsRows > label {
+  min-height: calc(90 * var(--settings-unit));
+  gap: calc(20 * var(--settings-unit));
+  border: 0;
+}
+
+.settingsScene .settingsSlider {
+  padding: 0;
+  grid-template-columns: calc(244 * var(--settings-unit)) minmax(0, 1fr);
+}
+
+.settingsScene .settingsOptions {
+  padding-top: calc(14 * var(--settings-unit));
+  padding-bottom: calc(9 * var(--settings-unit));
+}
+
+.settingsScene .quickDock {
+  flex-direction: column;
+  gap: calc(36 * var(--settings-unit));
+  align-items: center;
+  justify-content: center;
+  transform: translateY(calc(-4 * var(--settings-unit)));
+}
+
+.settingsScene .quickButton {
+  width: calc(176 * var(--settings-unit));
+  height: calc(176 * var(--settings-unit));
+  min-height: 0;
+  padding: calc(28 * var(--settings-unit));
+  border: max(1px, calc(4 * var(--settings-unit))) solid #ffdebd;
+  border-radius: calc(12 * var(--settings-unit));
+  background: #1e1110;
+}
+
+.settingsScene .quickButton:last-child {
+  padding: calc(24 * var(--settings-unit));
+}
+
+.settingsScene .quickButton > span,
+.settingsScene .quickButton > span > span {
+  width: 100%;
+  height: 100%;
+}
+
+.settingsScene .gameHud {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  left: 0.75rem;
+  z-index: 1;
+  padding: 0;
+  flex-wrap: nowrap;
+}
+
+.settingsRestore {
+  display: grid;
+  width: calc(734 * var(--settings-unit));
+  height: calc(915 * var(--settings-unit));
+  place-items: center;
+}
+
+@media (max-width: 720px) {
+  .settingsScene .gameWorkspace {
+    --settings-unit: calc((100cqw - 2rem) / 734);
+    min-height: 0;
+    padding: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .settingsScene .quickDock {
+    flex-direction: row;
+    transform: none;
+  }
+
+  .settingsScene .gameHud {
+    display: none;
+  }
+}

@@ -1,0 +1,29 @@
+/* Every rule is local. Never import global.css into the distributable. */
+.dui-scope {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+  color: var(--doors-color-paper);
+  background: var(--doors-surface-stage);
+  border-radius: var(--doors-radius-sm);
+  padding: 1rem;
+  font-family: var(--doors-font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  text-align: start;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+.dui-scope, .dui-scope *, .dui-scope *::before, .dui-scope *::after { box-sizing: border-box; }
+.dui-scope :where(h1, h2, h3, p) { margin: 0; padding: 0; border: 0; }
+.dui-scope :where(button, input, textarea, select) { font: inherit; }
+.dui-scope :where(img, svg) { display: block; max-width: 100%; }
+.dui-scope :where(button, a) { -webkit-tap-highlight-color: transparent; }
+.dui-scope :focus-visible { outline: 2px solid var(--doors-color-cream); outline-offset: 4px; }
+.dui-scope ::selection { color: var(--doors-color-ink); background: var(--doors-color-cream); }
+@media (prefers-reduced-motion: reduce) {
+  .dui-scope *, .dui-scope *::before, .dui-scope *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,18 @@
+.space {
+  display: flex;
+  gap: var(--space-gap, var(--doors-space-md));
+  align-items: var(--space-align, stretch);
+  justify-content: var(--space-justify, flex-start);
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}

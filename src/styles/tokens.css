@@ -1,0 +1,92 @@
+@font-face {
+  font-family: "DOORS";
+  src: url("/assets/doors/fonts/Doors-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DOORS Remake";
+  src: url("/assets/doors/fonts/DOORSRemake-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+
+  --doors-color-char: #1a100d;
+  --doors-color-bark: #2f1b15;
+  --doors-color-cocoa: #49322b;
+  --doors-color-cream: #f7ddbe;
+  --doors-color-brass: #d0ae82;
+  --doors-color-danger: #f07b69;
+  --doors-switch-active-track: #8f6654;
+  --doors-switch-active-thumb: #ffdebd;
+  --doors-slider-filled-track: #593a33;
+  --doors-slider-empty-track: #160d0c;
+  --doors-slider-filled-dot: #836356;
+  --doors-slider-empty-dot: #504138;
+  --doors-settings-background: #1e1110;
+  --doors-color-paper: #e6e6e6;
+  --doors-color-muted: #b99e8c;
+  --doors-color-quiet: #80675b;
+  --doors-color-ink: #321f19;
+
+  --doors-surface-stage: #1a100d;
+  --doors-surface-panel: #2f1b15;
+  --doors-surface-raised: #49322b;
+  --doors-surface-deep: #120a08;
+  --doors-line-subtle: #5a4439;
+  --doors-line-strong: #f7ddbe;
+  --doors-border-heavy: 3px solid var(--doors-color-cream);
+
+  --doors-font-display:
+    "DOORS", "DOORS Remake", "Oswald Variable", "MiSans", "Noto Sans SC",
+    "Microsoft YaHei", sans-serif;
+  --doors-font-label:
+    "Oswald Variable", "DOORS", "MiSans", "Noto Sans SC", "Microsoft YaHei",
+    sans-serif;
+  --doors-font-body:
+    "Rubik Variable", "MiSans", "Noto Sans SC", "Microsoft YaHei",
+    "PingFang SC", sans-serif;
+  --doors-font-code:
+    "Inconsolata Variable", "Cascadia Code", "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+
+  --doors-text-display: clamp(3.5rem, 10vw, 8.5rem);
+  --doors-text-h1: clamp(2.5rem, 6vw, 4.75rem);
+  --doors-text-h2: clamp(1.75rem, 3vw, 2.75rem);
+  --doors-text-h3: clamp(1.25rem, 2vw, 1.75rem);
+  --doors-text-body: 1rem;
+  --doors-text-small: 0.875rem;
+  --doors-text-caption: 0.75rem;
+
+  --doors-space-none: 0;
+  --doors-space-xxs: 0.25rem;
+  --doors-space-xs: 0.5rem;
+  --doors-space-sm: 0.75rem;
+  --doors-space-md: 1rem;
+  --doors-space-lg: 1.5rem;
+  --doors-space-xl: 2rem;
+  --doors-space-xxl: 3rem;
+  --doors-space-3xl: 4rem;
+  --doors-space-4xl: 5rem;
+
+  --doors-radius-sm: 0.5rem;
+  --doors-radius-md: 0.875rem;
+  --doors-radius-lg: 1.25rem;
+  --doors-radius-pill: 999px;
+
+  --doors-duration-fast: 140ms;
+  --doors-duration-base: 180ms;
+  --doors-duration-slow: 260ms;
+  --doors-ease-out: cubic-bezier(0.2, 0.75, 0.25, 1);
+  --doors-ease-expressive: cubic-bezier(0.22, 1.18, 0.36, 1);
+
+  --doors-shadow-panel: none;
+  --doors-focus-inner: var(--doors-color-cream);
+  --doors-focus-outer: #1a100d;
+}

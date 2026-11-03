@@ -1,0 +1,23 @@
+.grid {
+  display: grid;
+  gap: var(--grid-gap, var(--doors-space-md));
+  grid-template-columns: var(--grid-template);
+}
+
+.responsive {
+  grid-template-columns:
+    repeat(auto-fit, minmax(min(var(--grid-min, 13rem), 100%), 1fr));
+}
+
+@media (max-width: 720px) {
+  .responsive {
+    grid-template-columns:
+      repeat(auto-fit, minmax(min(10rem, 100%), 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .responsive {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

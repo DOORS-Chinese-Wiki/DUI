@@ -1,0 +1,5 @@
+.card { height: 100%; }
+.card h3 { font-size: 1.5rem; }
+.artwork { width: 100%; min-height: 8rem; border-radius: var(--doors-radius-sm); background: var(--doors-surface-deep); }
+.artwork > span { width: 6rem; height: 6rem; }
+.description { min-height: 2.8rem; text-align: center; }

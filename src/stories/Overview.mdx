@@ -1,0 +1,23 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="DUI/Overview" />
+
+# DUI
+
+DUI 复刻 DOORS 的网页界面。这里可以单独查看组件和参数；完整的大厅、设置面板与文档示例在项目主页。
+
+## 组件怎么组合
+
+`Icon` 显示素材，`LobbyIconButton` 组合图标与按钮，`LobbyMenu` 负责排列。图标入口和大厅菜单使用同一个按钮实现，移入时放大 14%，相邻按钮移开。物品栏沿用这套缓动，放大幅度为 25%，保留半透明槽位和奶油色描边。
+
+`Panel`、`Space` 和 `Grid` 可以组合设置面板或商店。滑动条、开关和标签页都有受控与非受控用法，具体参数在各自的 Docs 页。
+
+## 使用素材
+
+颜色和间距变量在 `src/styles/tokens.css`，素材名在 `src/components/Icon/assets.ts`。图片、字体与声音的来源记在仓库的 `ATTRIBUTION.md`。
+
+音效默认关闭。需要时用 `SoundProvider` 包裹组件并设置 `enabled`。键盘操作和系统的减少动态效果偏好保留。
+
+## MediaWiki
+
+运行 `npm run pack:mediawiki` 可生成独立包。Wiki 页面只写容器和 JSON 参数，初始化由站点脚本处理。安装步骤在 `docs/MEDIAWIKI.md`。

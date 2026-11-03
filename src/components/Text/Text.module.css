@@ -1,0 +1,117 @@
+.text {
+  margin: 0;
+}
+
+.display,
+.h1,
+.h2,
+.h3 {
+  font-family: var(--doors-font-display);
+  font-weight: 400;
+}
+
+.label {
+  font-family: var(--doors-font-label);
+  font-weight: 500;
+}
+
+.display {
+  font-size: var(--doors-text-display);
+  letter-spacing: -0.018em;
+  line-height: 0.82;
+}
+
+.h1 {
+  font-size: var(--doors-text-h1);
+  letter-spacing: 0.01em;
+  line-height: 0.92;
+}
+
+.h2 {
+  font-size: var(--doors-text-h2);
+  letter-spacing: 0.018em;
+  line-height: 1.04;
+}
+
+.h3 {
+  font-size: var(--doors-text-h3);
+  letter-spacing: 0.025em;
+  line-height: 1.15;
+}
+
+.label {
+  font-size: var(--doors-text-small);
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.body {
+  font-family: var(--doors-font-body);
+  font-size: var(--doors-text-body);
+  line-height: 1.75;
+}
+
+.small {
+  font-family: var(--doors-font-body);
+  font-size: var(--doors-text-small);
+  line-height: 1.6;
+}
+
+.caption {
+  font-family: var(--doors-font-body);
+  font-size: var(--doors-text-caption);
+  line-height: 1.5;
+}
+
+.code {
+  font-family: var(--doors-font-code);
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+.inherit {
+  color: inherit;
+}
+
+.default {
+  color: var(--doors-color-paper);
+}
+
+.cream {
+  color: var(--doors-color-cream);
+}
+
+.muted {
+  color: var(--doors-color-muted);
+}
+
+.quiet {
+  color: var(--doors-color-quiet);
+}
+
+.accent {
+  color: var(--doors-color-brass);
+}
+
+.danger {
+  color: var(--doors-color-danger);
+}
+
+.start {
+  text-align: start;
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  text-align: end;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

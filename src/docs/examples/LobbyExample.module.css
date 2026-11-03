@@ -1,0 +1,53 @@
+.lobbyStage {
+  --doors-color-cream: #ffdebd;
+  --doors-color-ink: #452719;
+  display: grid;
+  width: 100%;
+  min-height: 20.75rem;
+  aspect-ratio: 1096 / 332;
+  padding: 7.5625rem 1.5rem 0.375rem;
+  place-items: end center;
+  border-radius: var(--doors-radius-lg);
+  background: #160f16 url('/assets/doors/backgrounds/site-dark.webp') center / cover;
+}
+
+.lobbyStack {
+  min-width: 0;
+  width: min(48.57rem, 100%);
+  gap: 0.605rem;
+}
+
+.hostButton {
+  width: min(30.125rem, 100%);
+  min-height: 6rem;
+  gap: 1.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 1.25rem;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.hostButton svg {
+  width: 3.5rem;
+  height: 4.125rem;
+}
+
+@media (max-width: 900px) {
+  .lobbyStack { gap: 1.375rem; }
+  .lobbyStage {
+    min-height: auto;
+    aspect-ratio: auto;
+    padding: 3rem 1rem 1.25rem;
+  }
+  .hostButton {
+    min-height: 5rem;
+    gap: 1rem;
+    padding-inline: 1rem;
+    font-size: clamp(1.75rem, 7vw, 3rem);
+  }
+  .hostButton svg {
+    width: 0.875em;
+    height: 1.03125em;
+  }
+}

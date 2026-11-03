@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DUI · MediaWiki 接入验证</title>
+  <style>
+    body { margin: 2rem auto; max-width: 1100px; padding: 0 1rem; color: #202122; background: #fff; font-family: sans-serif; }
+    h1, h2 { color: #202122; border-bottom: 1px solid #a2a9b1; font-family: Georgia, serif; font-weight: normal; }
+    .mw-parser-output h2 { margin: 1.5em 0 .5em; padding: .2em 0; }
+    .mw-parser-output button { font-family: serif; }
+    .dui-widget { margin: 1rem 0; }
+    #outside-control { padding: .5rem; }
+  </style>
+  <link rel="stylesheet" href="./dui.css">
+  <script src="./dui.js" defer></script>
+</head>
+<body class="skin-vector">
+  <main class="mw-parser-output" id="mw-content-text">
+    <h1>DUI · MediaWiki 接入验证</h1>
+    <p id="outside-text">此页面模拟 Wiki 的浅色皮肤。以下组件使用独立样式；页面本身保持白底黑字。</p>
+    <button id="outside-control">Wiki 原生按钮</button>
+    <h2>物品栏</h2>
+    <div class="dui-widget" id="inventory-demo" data-dui="inventory" data-dui-props='{"label":"随身物品栏","defaultValue":null,"items":[{"id":"vitamins","icon":"vitamins"},{"id":"journal","icon":"journal"},{"id":"flashlight","icon":"flashlight","charge":0.15},{"id":"lockpick","icon":"lockpick","charge":0.45},{"id":"lighter","icon":"lighter","charge":1},{"id":"crucifix","icon":"crucifix","disabled":true},{"id":"candle","icon":"candle","size":"sm"},{"id":"key","icon":"skeletonKey","size":"sm","count":1},{"id":"compass","icon":"compass","size":"sm","shape":"circle"}]}'>物品栏加载中：维生素、笔记、手电筒、开锁器、打火机、十字架、蜡烛、钥匙、指南针。</div>
+    <h2>设置面板</h2>
+    <div class="dui-widget" id="panel-demo" data-dui="panel" data-dui-props='{"title":"设置","description":"与组件库共享实际组件，数值仅保存在当前页面。","children":[{"component":"slider","props":{"label":"大厅音乐","defaultValue":20}},{"component":"switch","props":{"label":"减小动作幅度","defaultChecked":true}}]}'>大厅音乐：20；减小动作幅度：开启。</div>
+    <h2>大厅菜单</h2>
+    <div class="dui-widget" id="lobby-demo" data-dui="lobby">大厅菜单加载中…</div>
+    <h2>弹窗</h2>
+    <div class="dui-widget" id="dialog-demo" data-dui="dialog" data-dui-props='{"title":"出发前装备","description":"可用 Escape 关闭，关闭后焦点回到打开按钮。","triggerLabel":"查看装备","children":{"component":"inventory","props":{"items":[{"id":"lighter","icon":"lighter"},{"id":"lockpick","icon":"lockpick"}]}}}'>可选装备：打火机、开锁器。</div>
+    <h2>最近一次组件事件</h2>
+    <pre id="event-log" aria-live="polite">尚未操作</pre>
+  </main>
+  <script>
+    document.addEventListener('dui:action', function (event) {
+      document.getElementById('event-log').textContent = JSON.stringify(event.detail, null, 2);
+    });
+  </script>
+</body>
+</html>

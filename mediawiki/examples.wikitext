@@ -1,0 +1,14 @@
+== 物品栏 ==
+<div class="dui-widget" data-dui="inventory" data-dui-props='{"label":"随身物品栏","defaultValue":null,"items":[{"id":"vitamins","icon":"vitamins"},{"id":"flashlight","icon":"flashlight","charge":0.15},{"id":"lighter","icon":"lighter","charge":1},{"id":"key","icon":"skeletonKey","count":1,"size":"sm"},{"id":"compass","icon":"compass","size":"sm","shape":"circle"}]}'>物品栏：维生素、手电筒、打火机、骷髅钥匙、指南针。</div>
+
+== 大厅入口 ==
+<div class="dui-widget" data-dui="lobby" data-dui-props='{"showStore":true}'>大厅菜单：商店、物品、成就、设置。</div>
+
+== 设置面板 ==
+<div class="dui-widget" data-dui="panel" data-dui-props='{"title":"设置","children":[{"component":"slider","props":{"label":"大厅音乐","defaultValue":20}},{"component":"switch","props":{"label":"减小动作幅度","defaultChecked":true}}]}'>大厅音乐：20；减小动作幅度：开启。</div>
+
+== 弹窗 ==
+<div class="dui-widget" data-dui="dialog" data-dui-props='{"title":"出发前装备","triggerLabel":"查看装备","children":{"component":"inventory","props":{"items":[{"id":"lighter","icon":"lighter"},{"id":"lockpick","icon":"lockpick"}]}}}'>可选装备：打火机、开锁器。</div>
+
+== 成就 ==
+<div class="dui-widget" data-dui="achievement" data-dui-props='{"achievement":"outOfMyWay","progress":3,"max":5,"description":"组件交互示例，进度为演示数据。"}'>Out Of My Way：演示进度 3 / 5。</div>

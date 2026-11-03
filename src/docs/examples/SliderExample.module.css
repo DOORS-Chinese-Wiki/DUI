@@ -1,0 +1,21 @@
+.documentationControls > label > span:first-child > span:first-child {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.documentationControls {
+  display: grid;
+  min-height: 12rem;
+  padding: 0.75rem;
+  gap: 1.25rem;
+}
+
+.documentationControls output {
+  color: #d0ae82;
+  font-family: var(--doors-font-code);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 720px) {
+  .documentationControls { padding: 0.25rem; }
+}

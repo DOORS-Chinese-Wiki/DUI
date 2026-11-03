@@ -1,0 +1,17 @@
+.panel {
+  min-width: 0;
+  width: 100%;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: var(--doors-border-heavy);
+  border-radius: var(--doors-radius-sm);
+  color: var(--doors-color-cream);
+  background: var(--doors-settings-background);
+}
+.header { padding-bottom: 1rem; }
+.title { min-width: 0; font-size: clamp(1.5rem, 3vw, 2rem); overflow-wrap: anywhere; line-height: 1.2; }
+.description { margin: -0.25rem 0 1.25rem; }
+.body { min-width: 0; }
+.footer { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--doors-color-cocoa); }
+.section { min-width: 0; }
+.band { margin: 0; padding: 0.6rem 0.85rem; border-radius: var(--doors-radius-sm); background: var(--doors-color-cocoa); font-size: 1rem; font-weight: 600; }
+.sectionBody { padding: 1rem 0.25rem 0; }

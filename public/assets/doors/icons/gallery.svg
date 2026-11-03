@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Grafika (https://www.grafika.cc/) -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 2349 2349" preserveAspectRatio="xMidYMid meet">
+	<defs>
+		<mask id="blend_mask_1" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(0.9816611738247, -0.190634046815128, 0.190634046815129, 0.9816611738247, 338.54868468054, 1745.60533084896)" x="-41" y="-182" width="82" height="363" id="Прямоугольник" style="fill:black;" />
+		</mask>
+		<mask id="blend_mask_2" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(0.990501587184375, 0.137501293758404, -0.137501293758405, 0.990501587184375, 2265.07017163273, 1736.17709716196)" x="-41" y="-289" width="82" height="578" id="Прямоугольник 3" style="fill:black;" />
+		</mask>
+		<mask id="blend_mask_3" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(0.981610722176459, 0.19089366178114, -0.19089366178114, 0.981610722176458, 362.122907831304, 1095.26801078436)" x="-38" y="-235" width="76" height="470" id="Прямоугольник 1" style="fill:black;" />
+		</mask>
+		<mask id="blend_mask_4" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(0.44538252355712, -0.895340386506658, 0.895340386506659, 0.445382523557119, 534.843410519457, 2031.99768401036)" x="-38" y="-213" width="76" height="427" id="Прямоугольник 7" style="fill:black;" />
+		</mask>
+		<mask id="blend_mask_5" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(-0.327565033100225, -0.944828634774608, 0.944828634774608, -0.327565033100224, 2083.03127668762, 2059.07113858759)" x="-39" y="-218" width="78" height="437" id="Прямоугольник 8" style="fill:black;" />
+		</mask>
+		<mask id="blend_mask_6" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(0.990488611100437, 0.137594735656305, -0.137594735656305, 0.990488611100436, 116.823772090914, 734.355344674038)" x="-38" y="-202" width="76" height="404" id="Прямоугольник 4" style="fill:black;" />
+		</mask>
+		<mask id="blend_mask_7" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(0.349461683714382, 0.936950655912845, -0.936950655912846, 0.349461683714382, 318.292178709609, 506.19761659168)" x="-38" y="-202" width="76" height="404" id="Прямоугольник 5" style="fill:black;" />
+		</mask>
+		<mask id="blend_mask_8" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(-0.218245898149088, 0.975893809766769, -0.97589380976677, -0.21824589814909, 1760.0568427376, 446.588017976606)" x="-38" y="-202" width="76" height="404" id="Прямоугольник 6" style="fill:black;" />
+		</mask>
+		<mask id="blend_mask_9" mask-type="luminance" style="mask-type:luminance;" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="109" y="392" width="2219" height="1771">
+			<rect x="109" y="392" width="2219" height="1771" fill="white" />
+			<rect transform="matrix(0.986901373968783, -0.161324759595454, 0.161324759595454, 0.986901373968783, 2266.55086554172, 1057.64166465246)" x="-38" y="-277" width="76" height="554" id="Прямоугольник 2" style="fill:black;" />
+		</mask>
+	</defs>
+	<g style="isolation: isolate;">
+		<g mask="url(#blend_mask_9)">
+			<g mask="url(#blend_mask_8)">
+				<g mask="url(#blend_mask_7)">
+					<g mask="url(#blend_mask_6)">
+						<g mask="url(#blend_mask_5)">
+							<g mask="url(#blend_mask_4)">
+								<g mask="url(#blend_mask_3)">
+									<g mask="url(#blend_mask_2)">
+										<g mask="url(#blend_mask_1)">
+											<path transform="matrix(0.998067361741381, -0.0621413020993229, 0.062141302099323, 0.998067361741382, 6.56466718542084, 346.873508732106)" d="M1700 1364 L1173 1592 L914 1087 L454 1750 L255 1506 L344 628 L565 468 L1994 563 L2211 769 L2147 1724 L1965 1835 L1962 1836 L1700 1364 Z" id="Путь" style="fill:#FFFFFF;" />
+											<path transform="matrix(0.998067361741381, -0.0621413020993229, 0.062141302099323, 0.998067361741382, -115.513084896347, 209.984019626655)" d="M205 537 L395 310 L1904 355 L2038 525 L557 435 L292 637 L210 1506 L205 537 Z" id="Путь 1" style="fill:#FFFFFF;" />
+										</g>
+									</g>
+								</g>
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
