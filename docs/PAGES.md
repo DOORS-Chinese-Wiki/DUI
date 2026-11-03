@@ -23,7 +23,7 @@ https://doors-chinese-wiki.github.io/DUI/
 ```sh
 npm ci
 npm run build:pages
-npm run preview -- --host 127.0.0.1
+npm run preview -- --host 127.0.0.1 --base /DUI/
 ```
 
 打开终端地址下的 `/DUI/`，检查物品图标、背景、字体和下载链接。访问 `/DUI/mediawiki/`，可以在白色页面中检查组件样式是否影响外部内容。
