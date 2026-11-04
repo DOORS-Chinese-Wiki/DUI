@@ -14,7 +14,8 @@ export default defineConfig({
           css.walkRules(rule => {
             if (rule.parent?.type === 'atrule' && /keyframes$/i.test(rule.parent.name)) return;
             rule.selectors = rule.selectors.map(selector => selector === ':root' ? '.dui-scope'
-              : selector.startsWith('.dui-scope') ? selector : '.dui-scope ' + selector);
+              : selector.startsWith('.dui-scope') || selector.startsWith('.dui-lobby-example')
+                ? selector : '.dui-scope ' + selector);
           });
           output.source = css.toString().replaceAll('/assets/doors/', './assets/doors/');
         }

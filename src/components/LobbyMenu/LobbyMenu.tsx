@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { forwardRef, type ButtonHTMLAttributes, type HTMLAttributes } from 'react';
+import { forwardRef, type ButtonHTMLAttributes, type CSSProperties, type HTMLAttributes } from 'react';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { doorsIconAssets, type DoorsIconName } from '../Icon/assets';
@@ -52,17 +52,26 @@ export interface LobbyMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'ch
 }
 
 export const LobbyMenu = forwardRef<HTMLDivElement, LobbyMenuProps>(
-  ({ showStore = true, items = lobbyMenuIcons, onAction, className,
-    'aria-label': label = '大厅菜单', ...rest }, ref) => (
-    <Space {...rest} ref={ref} size="xxs" align="end" justify="center" role="group"
-      aria-label={label} className={clsx(styles.menu, className)}>
-      {showStore ? <Button variant="secondary" className={clsx(gameStyles.button, styles.storeButton)}
-        leadingIcon={<CartGlyph />} onClick={() => onAction?.('store')}>商店</Button> : null}
-      <Space size="xxs" align="end" className={styles.iconRow}>
-        {items.map(icon => <LobbyIconButton key={icon} icon={icon} onClick={() => onAction?.(icon)} />)}
+  ({ showStore = true, items = lobbyMenuIcons, onAction, className, style,
+    'aria-label': label = '大厅菜单', ...rest }, ref) => {
+    const iconsWidth = items.length * 88 + Math.max(0, items.length - 1) * 2;
+    const storeWidth = showStore ? 208 : 0;
+    const growth = Math.max(storeWidth, items.length ? 88 : 0) * 0.14;
+    const designWidth = Math.max(1, iconsWidth + storeWidth + (showStore && items.length ? 2 : 0) + growth);
+    return (
+      <Space {...rest} ref={ref} size="xxs" align="end" justify="center" role="group"
+        aria-label={label} className={clsx(styles.menu, className)}
+        style={{ '--lobby-layout-width': designWidth, ...style } as CSSProperties}>
+        <Space size="xxs" align="end" justify="center" className={styles.layout}>
+          {showStore ? <Button variant="secondary" className={clsx(gameStyles.button, styles.storeButton)}
+            leadingIcon={<CartGlyph />} onClick={() => onAction?.('store')}>商店</Button> : null}
+          <Space size="xxs" align="end" className={styles.iconRow}>
+            {items.map(icon => <LobbyIconButton key={icon} icon={icon} onClick={() => onAction?.(icon)} />)}
+          </Space>
+        </Space>
       </Space>
-    </Space>
-  ),
+    );
+  },
 );
 
 LobbyMenu.displayName = 'LobbyMenu';

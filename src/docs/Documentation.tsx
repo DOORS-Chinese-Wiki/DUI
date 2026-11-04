@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { version } from '../../package.json';
 import { Button, Divider, Grid, Icon, Layout, SearchField, Space, Text } from '../components';
 import { examples, type ExampleDefinition } from './examples/registry';
 import { docOrder, docPages, quickStartCode, type DocId, type DocPage } from './catalog';
@@ -156,14 +157,14 @@ export function DocumentationSection({ id }: { id: DocId }) {
 export function DocumentationIntro() {
   return <Layout as="section" maxWidth="full" padding="none" id="overview" data-doc-section className={styles.introduction} aria-labelledby="overview-title">
     <Space size="sm" align="center" className={styles.breadcrumb}>文档 <span>/</span> 开始使用</Space>
-    <Space size="md" align="center" className={styles.introTitle}><Text as="h1" variant="h1" tone="inherit" id="overview-title">组件文档</Text><Text as="span" variant="caption" tone="inherit" className={styles.version}>v0.1.0</Text></Space>
+    <Space size="md" align="center" className={styles.introTitle}><Text as="h1" variant="h1" tone="inherit" id="overview-title">组件文档</Text><Text as="span" variant="caption" tone="inherit" className={styles.version}>v{version}</Text></Space>
     <Text as="p" variant="small" tone="inherit" className={styles.introLead}>DOORS 风格的按钮、物品栏和设置界面。</Text>
     <Text as="p" variant="small" tone="inherit" className={styles.description}>DUI 用 React 和 TypeScript 编写。这份文档可以直接操作组件、查看对应源码，也可以下载浏览器包，在 MediaWiki 页面中使用。</Text>
     <Space size="md" align="center" wrap className={styles.introLinks}>
       <Button asChild trailingIcon={<span aria-hidden="true">→</span>}><a href="#actions">浏览组件</a></Button>
       <Button asChild variant="secondary" trailingIcon={<span aria-hidden="true">↗</span>}><a href="#lobby">查看大厅示例</a></Button>
       <Button asChild variant="plain"><a href="https://github.com/DOORS-Chinese-Wiki/DUI/blob/main/docs/MEDIAWIKI.md">MediaWiki 安装说明</a></Button>
-      <Button asChild variant="plain"><a href={`${import.meta.env.BASE_URL}downloads/dui-mediawiki-0.1.0.zip`}>下载 Wiki 组件包</a></Button>
+      <Button asChild variant="plain"><a href={`${import.meta.env.BASE_URL}downloads/dui-mediawiki-${version}.zip`}>下载 Wiki 组件包</a></Button>
     </Space>
     <Layout maxWidth="full" padding="none" className={styles.projectNote}><Text variant="caption" tone="inherit">使用方式</Text><Text as="p" variant="small" tone="inherit">React 项目从 <Text as="code" variant="code" tone="inherit">src/components</Text> 引入组件。MediaWiki 使用单独构建的 JS、CSS 和素材包，页面通过 <Text as="code" variant="code" tone="inherit">data-dui</Text> 配置组件。</Text></Layout>
     <Layout maxWidth="full" padding="none" id="quick-start" className={styles.quickStart}>
@@ -242,7 +243,7 @@ export function DocumentationShell({ children, actions }: { children: ReactNode;
           {groups.map(group => <Space direction="vertical" size="none" className={styles.navGroup} key={group}><Text as="h2" variant="h2" tone="inherit">{group}</Text>{entries.filter(id => docPages[id].group === group).map(id => <Button key={id} asChild variant={active === id ? 'primary' : 'plain'} size="sm"><a href={`#${id}`} onClick={() => select(id)} aria-current={active === id ? 'location' : undefined}><span>{docPages[id].component}</span><Text as="span" variant="caption" tone="inherit" className={styles.navHint}>{docPages[id].title}</Text></a></Button>)}</Space>)}
           {entries.length === 0 ? <Text as="p" variant="small" tone="inherit" className={styles.emptySearch}>没有匹配的组件。试试 Button、滑动条或图标。</Text> : null}
         </Space>
-        <Space size="xs" align="center" className={styles.sidebarFooter}><span className={styles.statusDot} /><span>源码文档</span><Text as="code" variant="code" tone="inherit">v0.1.0</Text></Space>
+        <Space size="xs" align="center" className={styles.sidebarFooter}><span className={styles.statusDot} /><span>源码文档</span><Text as="code" variant="code" tone="inherit">v{version}</Text></Space>
       </Space>
       <Layout as="main" maxWidth="full" padding="none" className={styles.main} id="main-content">{children}
         <Space as="footer" direction="vertical" size="xxs" className={styles.footer}><Text as="p" variant="small" tone="inherit">DUI · React + TypeScript</Text><Text as="p" variant="small" tone="inherit">素材出处见仓库的 ATTRIBUTION.md。</Text><Button asChild variant="plain" size="sm"><a href="#overview">回到文档顶部 ↑</a></Button></Space>

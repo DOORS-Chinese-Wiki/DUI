@@ -10,6 +10,15 @@ for (const width of [1440, 1024, 900, 768, 390, 320]) {
     const stage = await host.locator('../..').boundingBox();
     expect(stage).not.toBeNull();
     await expect(lobby.getByRole('button')).toHaveCount(8);
+    const menu = lobby.getByRole('group', { name: '大厅菜单' });
+    const menuBounds = (await menu.boundingBox())!;
+    const hostBounds = (await host.boundingBox())!;
+    const iconBounds = (await menu.getByRole('button', { name: '设置', exact: true }).boundingBox())!;
+    expect(hostBounds.width / menuBounds.width).toBeCloseTo(482 / 778, 2);
+    expect(hostBounds.height / iconBounds.height).toBeCloseTo(96 / 88, 1);
+    const tops = await menu.getByRole('button').evaluateAll(buttons =>
+      buttons.map(button => button.getBoundingClientRect().bottom));
+    expect(Math.max(...tops) - Math.min(...tops)).toBeLessThan(1);
 
     for (const button of await lobby.getByRole('button').all()) {
       const bounds = await button.boundingBox();
@@ -19,6 +28,7 @@ for (const width of [1440, 1024, 900, 768, 390, 320]) {
         stage!.x + stage!.width + 1,
       );
     }
+    if (width === 390) await host.locator('../..').screenshot({ path: 'test-results/lobby-mobile-390.png' });
   });
 }
 

@@ -290,7 +290,7 @@ export const docPages = {
     title: '大厅', component: 'LobbyMenu', group: '组合示例',
     description: '组合主操作按钮与 LobbyMenu，复刻大厅快捷入口。图标按钮与 Icon 文档实例使用同一组件，移入或聚焦时放大、反色，并推动相邻按钮让位。',
     imports: "import { Button, LobbyMenu, Space } from './components';",
-    note: '预览直接运行 LobbyExample.tsx，同名 CSS 模块只负责背景和主操作布局。菜单按钮及 14% 放大缓动统一由 src/components/LobbyMenu 实现。',
+    note: '预览直接运行 LobbyExample.tsx，同名 CSS 模块只负责背景和主操作布局。手机端仍按一行排列，主按钮和菜单随容器一起缩小。菜单按钮及 14% 放大缓动统一由 src/components/LobbyMenu 实现。',
     api: [lobbyMenuApi, lobbyIconButtonApi],
   },
   settings: {

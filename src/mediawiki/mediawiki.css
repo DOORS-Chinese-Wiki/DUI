@@ -21,6 +21,48 @@
 .dui-scope :where(button, a) { -webkit-tap-highlight-color: transparent; }
 .dui-scope :focus-visible { outline: 2px solid var(--doors-color-cream); outline-offset: 4px; }
 .dui-scope ::selection { color: var(--doors-color-ink); background: var(--doors-color-cream); }
+
+/* Optional lobby composition used by the Wiki's HOST GAME + navigation markup. */
+.dui-lobby-example {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.605rem;
+  min-width: 0;
+}
+.dui-lobby-example .dui-lobby-host {
+  --dui-host-unit: min(1px, calc(100cqw / 778));
+  width: calc(482 * var(--dui-host-unit));
+  max-width: 100%;
+}
+.dui-lobby-example .dui-lobby-navigation { width: min(48.625rem, 100%); min-width: 0; }
+.dui-lobby-example :is(.dui-lobby-host, .dui-lobby-navigation) > .dui-widget {
+  padding: 0;
+  background: transparent;
+}
+.dui-lobby-example .dui-lobby-host .dui-widget > button {
+  width: 100%;
+  min-height: calc(96 * var(--dui-host-unit));
+  gap: calc(24 * var(--dui-host-unit));
+  padding: calc(12 * var(--dui-host-unit)) calc(32 * var(--dui-host-unit));
+  border-radius: calc(20 * var(--dui-host-unit));
+  font-size: calc(64 * var(--dui-host-unit));
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+.dui-lobby-example .dui-lobby-host button:not(:has(svg))::before {
+  content: '';
+  flex: 0 0 auto;
+  width: calc(56 * var(--dui-host-unit));
+  height: calc(66 * var(--dui-host-unit));
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.dui-lobby-example .dui-lobby-host button svg {
+  width: calc(56 * var(--dui-host-unit));
+  height: calc(66 * var(--dui-host-unit));
+}
 @media (prefers-reduced-motion: reduce) {
   .dui-scope *, .dui-scope *::before, .dui-scope *::after {
     animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;

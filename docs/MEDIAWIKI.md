@@ -14,8 +14,8 @@ npm run pack:mediawiki
 输出：
 
 - `dist-mediawiki/`：可直接部署的目录。
-- `artifacts/dui-mediawiki-0.1.0.zip`：静态部署压缩包。
-- `artifacts/dui-mediawiki-0.1.0.tgz`：可用 `npm install /绝对路径/文件.tgz` 本地安装的包；未发布到 npm。
+- `artifacts/dui-mediawiki-0.1.1.zip`：静态部署压缩包。
+- `artifacts/dui-mediawiki-0.1.1.tgz`：可用 `npm install /绝对路径/文件.tgz` 本地安装的包；未发布到 npm。
 
 GitHub Pages 已托管可直接加载的版本：`https://doors-chinese-wiki.github.io/DUI/mediawiki/`。下面的安装配置使用这个地址。需要自行托管时，解压 ZIP，把 `dui-mediawiki` 目录内的全部文件放到静态目录，保留子目录结构，再访问其中的 `index.html` 检查图标和字体。
 
@@ -154,7 +154,28 @@ ES Module：加载 `dui.css` 后，用 `<script type="module">` 导入 `dui.mjs`
 
 ## 样式和部署限制
 
-所有组件规则及主题变量被限定在 `.dui-scope` 内，CSS Modules 类名也仍然保留；包不会修改 Wiki 的 `html`、`body`、全局标题、链接或原生按钮。弹窗保留在宿主作用域内，并使用原生 dialog 顶层模态显示。组件支持键盘操作和系统“减少动态效果”偏好。
+组件规则及主题变量限定在 `.dui-scope` 内，大厅组合的布局规则限定在 `.dui-lobby-example` 内，CSS Modules 类名也仍然保留；包不会修改 Wiki 的 `html`、`body`、全局标题、链接或原生按钮。弹窗保留在宿主作用域内，并使用原生 dialog 顶层模态显示。组件支持键盘操作和系统“减少动态效果”偏好。
+
+## 从 0.1.0 更新大厅菜单
+
+0.1.1 修复了手机端大厅菜单的换行和溢出。商店与图标始终排成一行，按实际容器宽度缩放；`HOST GAME`、文字和播放图标使用同一缩放比例。按住图标时显示放大和反色反馈，松开或取消触摸后恢复。
+
+站点需要同时更新 `dui.js` 和 `dui.css`。自托管时替换完整发行目录；使用 Pages 地址时，确认两份文件都已刷新缓存。大厅组合可以沿用下面的结构，样式已包含在 `dui.css` 中：
+
+```html
+<div class="dui-lobby-example">
+  <div class="dui-lobby-host">
+    <div class="dui-widget" data-dui="button"
+      data-dui-props='{"label":"HOST GAME","action":"host-game"}'>HOST GAME</div>
+  </div>
+  <div class="dui-lobby-navigation">
+    <div class="dui-widget" data-dui="lobby"
+      data-dui-props='{"showStore":true}'>大厅菜单</div>
+  </div>
+</div>
+```
+
+请删除站点原先针对这组类名设置的手机端大按钮宽高、字号，以及菜单换行规则，保留所需的背景和外边距。只使用 `data-dui="lobby"` 时，不必增加外层组合。`nomobile` 由维基工作人员在更新后检查并处理，组件包不会修改它。
 
 图像、mask 图标与可选声音通过 `baseUrl` 解析；CSS 字体相对 `dui.css` 文件解析。发行包里的背景素材是可选素材，没有将任何展示页或用户截图 UI 烘焙进组件。中文优先使用站点/系统可用字体；包附带 DOORS 字体和拉丁字体，不包含整套 MiSans 字库。
 

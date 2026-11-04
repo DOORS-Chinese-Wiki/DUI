@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import packageInfo from '../../package.json' with { type: 'json' };
 import type { WidgetNode } from '../../src/mediawiki/types';
 
 declare global {
@@ -28,7 +29,7 @@ test('IIFE loads its own runtime and assets under a deployment subdirectory with
   await expect(page.locator('#outside-control')).toHaveCSS('font-family', 'serif');
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--doors-color-char'))).toBe('');
   expect(await page.evaluate(() => 'React' in window)).toBe(false);
-  expect(await page.locator('#inventory-demo img').first().getAttribute('src')).toContain('/releases/dui/0.1.0/assets/doors/');
+  expect(await page.locator('#inventory-demo img').first().getAttribute('src')).toContain(`/releases/dui/${packageInfo.version}/assets/doors/`);
   expect(errors).toEqual([]); expect(failures).toEqual([]);
 });
 
@@ -156,7 +157,7 @@ test('ES Module entry works without the IIFE global', async ({ page, baseURL }) 
     api.mount(document.getElementById('module-host'), { component: 'button', props: { label: '模块入口' } });
     return api.version;
   }, baseURL!);
-  expect(version).toBe('0.1.0');
+  expect(version).toBe(packageInfo.version);
   await expect(page.getByRole('button', { name: '模块入口' })).toBeVisible();
   expect(await page.evaluate(() => window.DUI)).toBeUndefined();
 });

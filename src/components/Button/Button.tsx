@@ -5,6 +5,7 @@ import {
   cloneElement,
   forwardRef,
   isValidElement,
+  useState,
   type ButtonHTMLAttributes,
   type MouseEvent,
   type PointerEvent,
@@ -55,12 +56,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onPointerEnter,
       onPointerLeave,
       onPointerDown,
+      onPointerUp,
+      onPointerCancel,
       ...rest
     },
     ref,
   ) => {
     const Component = asChild ? Slot : 'button';
     const isUnavailable = disabled || loading;
+    const [touchPressed, setTouchPressed] = useState(false);
     const { play } = useInteractionSound();
     const leadingContent = loading ? (
       <span className={styles.loading} aria-hidden="true">
@@ -100,6 +104,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     function handlePointerLeave(event: PointerEvent<HTMLButtonElement>) {
+      setTouchPressed(false);
       if (!isUnavailable) {
         play('leave');
       }
@@ -108,9 +113,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     function handlePointerDown(event: PointerEvent<HTMLButtonElement>) {
       if (!isUnavailable && event.button === 0) {
+        if (event.pointerType === 'touch') setTouchPressed(true);
         play('press');
       }
       onPointerDown?.(event);
+    }
+
+    function handlePointerUp(event: PointerEvent<HTMLButtonElement>) {
+      setTouchPressed(false);
+      onPointerUp?.(event);
+    }
+
+    function handlePointerCancel(event: PointerEvent<HTMLButtonElement>) {
+      setTouchPressed(false);
+      onPointerCancel?.(event);
     }
 
     const sharedProps = {
@@ -127,10 +143,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       disabled: asChild ? undefined : isUnavailable,
       'aria-disabled': asChild && isUnavailable ? true : undefined,
       'aria-busy': loading || undefined,
+      'data-touch-pressed': (touchPressed && !isUnavailable) || undefined,
       onClick: handleClick,
       onPointerEnter: handlePointerEnter,
       onPointerLeave: handlePointerLeave,
       onPointerDown: handlePointerDown,
+      onPointerUp: handlePointerUp,
+      onPointerCancel: handlePointerCancel,
       ...rest,
     };
 

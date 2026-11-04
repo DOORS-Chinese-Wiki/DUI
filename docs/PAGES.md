@@ -14,7 +14,7 @@ https://doors-chinese-wiki.github.io/DUI/
 | --- | --- |
 | `/DUI/` | 交互式组件文档 |
 | `/DUI/mediawiki/` | 独立包的接入验证页与 JS/CSS/素材 |
-| `/DUI/downloads/dui-mediawiki-0.1.0.zip` | MediaWiki ZIP 包 |
+| `/DUI/downloads/dui-mediawiki-0.1.1.zip` | MediaWiki ZIP 包 |
 
 文档的基础路径是 `/DUI/`。`src/main.tsx` 用这个路径解析图片和声音，构建后的 CSS 也会使用对应路径。Wiki 独立包则通过 `DUIConfig.baseUrl` 指定自己的部署目录。
 

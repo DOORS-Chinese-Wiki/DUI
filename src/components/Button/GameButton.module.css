@@ -12,6 +12,7 @@
   border-radius: calc(var(--lobby-button-radius, 1.75rem) * var(--lobby-button-scale));
   color: var(--doors-color-cream);
   background: rgb(30 18 12 / 90%);
+  touch-action: manipulation;
   transition: width var(--game-motion-duration) var(--game-motion-ease),
     height var(--game-motion-duration) var(--game-motion-ease),
     border-radius var(--game-motion-duration) var(--game-motion-ease),
@@ -40,6 +41,16 @@
   }
 }
 .button:disabled { opacity: 0.5; }
+@media (hover: none) and (pointer: coarse) {
+  .button:not(:disabled)[data-touch-pressed="true"] {
+    --lobby-button-scale: var(--game-hover-scale, 1.14);
+    --lobby-code-cutout: var(--doors-color-cream);
+    z-index: 1;
+    border-color: var(--game-hover-border, var(--doors-color-ink));
+    color: var(--game-hover-color, var(--doors-color-ink));
+    background: var(--game-hover-background, var(--doors-color-cream));
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .button, .button > span { transition: none; }
 }

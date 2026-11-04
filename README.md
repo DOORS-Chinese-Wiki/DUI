@@ -2,7 +2,7 @@
 
 DUI 是一套 DOORS 风格的网页组件。按钮、物品栏和设置控件用 React 编写，也可以打成独立的 JS/CSS 包，嵌入 MediaWiki 页面。
 
-[组件文档](https://doors-chinese-wiki.github.io/DUI/) · [MediaWiki 安装说明](docs/MEDIAWIKI.md) · [下载组件包](https://doors-chinese-wiki.github.io/DUI/downloads/dui-mediawiki-0.1.0.zip)
+[组件文档](https://doors-chinese-wiki.github.io/DUI/) · [MediaWiki 安装说明](docs/MEDIAWIKI.md) · [下载组件包](https://doors-chinese-wiki.github.io/DUI/downloads/dui-mediawiki-0.1.1.zip)
 
 文档里的预览可以直接操作。切到代码页看到的 TSX 和 CSS，就是该预览使用的文件。
 

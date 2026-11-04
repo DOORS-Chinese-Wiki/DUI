@@ -12,42 +12,33 @@
 }
 
 .lobbyStack {
+  container-type: inline-size;
   min-width: 0;
-  width: min(48.57rem, 100%);
+  width: min(48.625rem, 100%);
   gap: 0.605rem;
 }
 
 .hostButton {
-  width: min(30.125rem, 100%);
-  min-height: 6rem;
-  gap: 1.5rem;
-  padding: 0.75rem 2rem;
-  border-radius: 1.25rem;
-  font-size: 4rem;
+  --host-unit: min(1px, calc(100cqw / 778));
+  width: calc(482 * var(--host-unit));
+  min-height: calc(96 * var(--host-unit));
+  gap: calc(24 * var(--host-unit));
+  padding: calc(12 * var(--host-unit)) calc(32 * var(--host-unit));
+  border-radius: calc(20 * var(--host-unit));
+  font-size: calc(64 * var(--host-unit));
   font-weight: 700;
   letter-spacing: 0.025em;
 }
 
 .hostButton svg {
-  width: 3.5rem;
-  height: 4.125rem;
+  width: calc(56 * var(--host-unit));
+  height: calc(66 * var(--host-unit));
 }
 
 @media (max-width: 900px) {
-  .lobbyStack { gap: 1.375rem; }
   .lobbyStage {
     min-height: auto;
     aspect-ratio: auto;
     padding: 3rem 1rem 1.25rem;
-  }
-  .hostButton {
-    min-height: 5rem;
-    gap: 1rem;
-    padding-inline: 1rem;
-    font-size: clamp(1.75rem, 7vw, 3rem);
-  }
-  .hostButton svg {
-    width: 0.875em;
-    height: 1.03125em;
   }
 }
