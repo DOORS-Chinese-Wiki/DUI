@@ -8,16 +8,16 @@
   <a href="https://doors-chinese-wiki.github.io/DUI/downloads/dui-mediawiki-0.1.2.zip">下载组件包</a>
 </p>
 
-## 在 React 中使用
+## 本地运行
 
-使用 Node.js 24，在仓库目录运行以下命令。
+使用 Node.js 24，在仓库目录执行以下命令。
 
 ```sh
 npm ci
 npm run dev
 ```
 
-打开终端显示的地址。在 `src/App.tsx` 中导入按钮和图标。
+打开终端给出的地址可以查看组件文档。要单独试一个按钮，可以把 `src/App.tsx` 换成下面这段。
 
 ```tsx
 import { Button, Icon } from './components';
@@ -31,24 +31,24 @@ export default function App() {
 }
 ```
 
-项目入口 `src/main.tsx` 加载主题和字体。将组件复制到其他 React 项目时，保留组件的 CSS 模块，并在入口加载 `src/styles/global.css`。
+复制组件到自己的 React 项目时，把同目录的 CSS 模块一起复制，并在应用入口导入 `src/styles/global.css`。
 
 ## 接入 MediaWiki
 
-管理员加载 `dui.js` 和 `dui.css` 后，在词条中用 `data-dui` 指定组件，用 `data-dui-props` 填写 JSON。
+站点装好 DUI 后，把下面这段粘贴到词条源码里，预览时会看到一格打火机物品栏。
 
 ```html
 <div class="dui-widget" data-dui="inventory"
      data-dui-props='{"items":[{"id":"lighter","icon":"lighter","file":"File:Icon lighter2.png"}]}'>
-  物品栏：打火机
+  物品栏里有一个打火机。
 </div>
 ```
 
-`file` 指定 Wiki 文件，`icon` 提供后备图。完整配置见 [MediaWiki 安装说明](docs/MEDIAWIKI.md)。
+`file` 填本站文件名，`icon` 是找不到文件时用的图标。Miraheze 和自托管站点的安装步骤见 [MediaWiki 安装说明](docs/MEDIAWIKI.md)。
 
 ## 开发
 
-组件代码在 `src/components`。文档的预览和代码标签共用 `src/docs/examples` 中的文件。新增示例时，在 `src/docs/examples/registry.ts` 注册。
+组件在 `src/components/`。文档预览和代码标签读同一份示例。修改示例时编辑 `src/docs/examples/` 里的文件，新增示例时再登记到 `registry.ts`。
 
 | 命令 | 用途 |
 | --- | --- |
@@ -57,10 +57,13 @@ export default function App() {
 | `npm run test:e2e` | 运行文档浏览器测试。截图基线使用 Windows Chrome |
 | `npm run test:mediawiki` | 构建并测试 MediaWiki 组件包 |
 | `npm run pack:mediawiki` | 生成 ZIP 和 TGZ，存入 `artifacts/` |
+| `npm run pack:miraheze` | 生成 Developers Wiki 的源码页文件 |
 | `npm run build:pages` | 将文档与组件包构建到 `dist/` |
 
-首次运行浏览器测试前，执行 `npx playwright install chrome`。推送到 `main` 后，GitHub Actions 构建并部署文档。详见 [Pages 部署说明](docs/PAGES.md)。
+首次运行浏览器测试前，执行 `npx playwright install chrome`。发布配置见 [GitHub Pages 部署说明](docs/PAGES.md)。
 
-## 素材
+## 许可
 
-封面使用 DOORS 字体中的门、背包和奖杯字形。DOORS 美术和标识归原作者所有。发行包附带依赖许可证，项目代码尚未指定开源许可证。[素材来源](ATTRIBUTION.md)
+DUI 的原创代码和文档采用 [CC BY-SA 4.0](LICENSE) 许可。转载时注明出处，分发改编版本时注明修改，并使用相同或兼容的许可。
+
+DOORS 的图标、字体、音效和标识沿用原权利人的使用条款。封面使用了 DOORS 字体的门、背包和奖杯字形。第三方依赖的许可证随发行包附带。[素材来源](docs/ASSETS.md)

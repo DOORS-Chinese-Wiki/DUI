@@ -4,20 +4,20 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # DUI
 
-DUI 复刻 DOORS 的网页界面。这里可以单独查看组件和参数；完整的大厅、设置面板与文档示例在项目主页。
+这里可以逐个试用 DUI 组件。完整的大厅和设置示例见 [DUI 文档](https://doors-chinese-wiki.github.io/DUI/)。
 
 ## 组件怎么组合
 
-`Icon` 显示素材，`LobbyIconButton` 组合图标与按钮，`LobbyMenu` 负责排列。图标入口和大厅菜单使用同一个按钮实现，移入时放大 14%，相邻按钮移开。物品栏沿用这套缓动，放大幅度为 25%，保留半透明槽位和奶油色描边。
+只显示图案时用 `Icon`，可点击的大厅入口用 `LobbyIconButton`。`LobbyMenu` 把这些按钮排成一行。鼠标移入时，按钮放大 14%，两侧腾出空间。物品栏槽位放大 25%。
 
-`Panel`、`Space` 和 `Grid` 可以组合设置面板或商店。滑动条、开关和标签页都有受控与非受控用法，具体参数在各自的 Docs 页。
+用 `Panel` 做外框，`Space` 和 `Grid` 排内容。滑动条、开关和标签页可以接应用状态，也可以只传默认值。各组件的 Docs 页列出了参数。
 
 ## 使用素材
 
-颜色和间距变量在 `src/styles/tokens.css`，素材名在 `src/components/Icon/assets.ts`。图片、字体与声音的来源记在仓库的 `ATTRIBUTION.md`。
+颜色和间距在 `src/styles/tokens.css`，图标名在 `src/components/Icon/assets.ts`。图片、字体和音效的出处见仓库里的 `docs/ASSETS.md`。
 
-音效默认关闭。需要时用 `SoundProvider` 包裹组件并设置 `enabled`。键盘操作和系统的减少动态效果偏好保留。
+打开音效时，用 `<SoundProvider enabled>` 包住组件。组件支持键盘操作，会读取系统的“减少动态效果”偏好。
 
 ## MediaWiki
 
-运行 `npm run pack:mediawiki` 可生成独立包。Wiki 页面只写容器和 JSON 参数，初始化由站点脚本处理。安装步骤在 `docs/MEDIAWIKI.md`。
+`npm run pack:mediawiki` 生成静态部署包，`npm run pack:miraheze` 生成 Developers Wiki 源码页文件。安装和词条例子见 `docs/MEDIAWIKI.md`。

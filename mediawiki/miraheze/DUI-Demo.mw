@@ -1,0 +1,13 @@
+Examples for [[DUI]]. Install DUI on this wiki to enable the controls below.
+
+== Button ==
+
+<div class="dui-widget" data-dui="button" data-dui-props='{"label":"Open inventory","action":"open-inventory"}'>Open inventory</div>
+
+== Inventory ==
+
+<div class="dui-widget" data-dui="inventory" data-dui-props='{"label":"Inventory","defaultValue":null,"items":[{"id":"lighter","icon":"lighter","label":"Lighter","charge":0.8},{"id":"key","icon":"skeletonKey","label":"Skeleton key","count":1},{"id":"compass","icon":"compass","label":"Compass","shape":"circle","size":"sm"}]}'>Inventory: lighter, skeleton key, compass.</div>
+
+== Settings ==
+
+<div class="dui-widget" data-dui="panel" data-dui-props='{"title":"Settings","children":[{"component":"slider","props":{"label":"Lobby music","defaultValue":20}},{"component":"switch","props":{"label":"Reduce motion","defaultChecked":true}}]}'>Lobby music: 20%. Reduce motion: on.</div>

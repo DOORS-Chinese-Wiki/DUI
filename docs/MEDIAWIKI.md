@@ -1,68 +1,87 @@
-# 在 MediaWiki 中使用 DUI
+# MediaWiki 安装说明
 
-DUI 的浏览器包提供组件脚本、样式和素材。管理员安装后，词条编辑者用 `data-dui` 和 JSON 参数插入组件。
+站点管理员在 `MediaWiki:Common.js` 安装 DUI。站点已装好 DUI 时，直接看[词条里的写法](#词条里怎么写)。
 
-## 获取组件包
+## Miraheze 安装
 
-从组件文档下载 ZIP，或在项目目录运行以下命令。
+Developers Wiki 上的三个源码页发布后，把下面这行加到本站的 `MediaWiki:Common.js`。先用自己的账号试装时，把它加到 `Special:MyPage/common.js`。
+
+```js
+mw.loader.load('https://dev.miraheze.org/w/index.php?title=User:Yatmt/DUI.js&action=raw&ctype=text/javascript');
+```
+
+打开本站含 DUI 组件的页面。占位文字换成按钮或物品栏，就说明组件已加载。在 Developers Wiki 上可以打开 `DUI/Demo` 测试。
+
+### 发布源码页
+
+在项目目录运行 `npm ci` 和 `npm run pack:miraheze`。从生成的 `artifacts/dui-miraheze-submission-<版本>/` 复制文件内容，按表里的顺序发布到 `dev.miraheze.org`。
+
+| 文件 | Developers Wiki 页面 |
+| --- | --- |
+| `DUI-runtime.js` | `User:Yatmt/DUI-runtime.js` |
+| `DUI.css` | `User:Yatmt/DUI.css` |
+| `DUI.js` | `User:Yatmt/DUI.js` |
+
+发布介绍和示例时，把 `DUI.mw` 存到 `DUI`，把 `DUI-Demo.mw` 存到 `DUI/Demo`。脚本和样式由 Developers Wiki 提供，图标和音效默认从 WikiTide 读取。
+
+### 字体
+
+标题和物品栏角标使用 DOORS Remake。发布 `DUI.css` 后，浏览器会从 WikiTide 读取字体。[DOORS Remake 字体文件](https://static.wikitide.net/stackdwiki/0/0c/DOORSRemake-Regular.woff2)
+
+要使用 Oswald、Rubik 和 Inconsolata，在使用 DUI 的站点打开 ManageWiki，在 CSP 服务列表中启用 **Google Fonts**。字体加载失败时，浏览器会接着使用样式表里列出的后备字体。
+
+## 静态部署
+
+站点允许从 GitHub Pages 加载脚本和样式时，可以直接使用下文的 `baseUrl`。自行托管时，下载 ZIP 或在项目目录打包。
 
 ```sh
 npm ci
 npm run pack:mediawiki
 ```
 
-输出：
-
-- `dist-mediawiki/`：可直接部署的目录。
-- `artifacts/dui-mediawiki-0.1.2.zip`：静态部署压缩包。
-- `artifacts/dui-mediawiki-0.1.2.tgz`：可用 `npm install /绝对路径/文件.tgz` 本地安装的包。
-
-GitHub Pages 已托管可直接加载的版本：`https://doors-chinese-wiki.github.io/DUI/mediawiki/`。下面的安装配置使用这个地址。需要自行托管时，解压 ZIP，把 `dui-mediawiki` 目录内的全部文件放到静态目录，保留子目录结构，再访问其中的 `index.html` 检查图标和字体。
-
-`dui.js` 是可直接加载的脚本，挂在 `window.DUI` 下；`dui.mjs` 用于 ES Module。两者选一种，样式使用同目录的 `dui.css`。
-
-## 管理员安装
-
-在 Common.js 和 Gadget 中选一种方式安装。
+上传整个 `dist-mediawiki/`，或解压 `artifacts/dui-mediawiki-<版本>.zip` 后上传里面的 `dui-mediawiki/`。保留子目录，打开部署地址下的 `index.html` 检查图标和字体。`artifacts/dui-mediawiki-<版本>.tgz` 是 npm 本地包，用 `npm install /绝对路径/文件.tgz` 安装。
 
 ### Common.js
 
-在 `MediaWiki:Common.js` 中先配置实际部署地址，再粘贴发行包中的 `integration/bootstrap.js`：
+在 `MediaWiki:Common.js` 加上这段配置，把 `baseUrl` 改成包的部署地址。接着粘贴发行包中 `integration/bootstrap.js` 的内容。
 
 ```js
 window.DUIConfig = {
   baseUrl: 'https://doors-chinese-wiki.github.io/DUI/mediawiki/',
-  sound: false, // 默认静音；需要交互音效时改为 true
+  sound: false, // 改为 true 可开启交互音效
   volume: 0.42
 };
 // 在这里接上 integration/bootstrap.js 的内容。
 ```
 
-bootstrap 使用 `mw.loader.load` 加载外部 CSS 与 IIFE 脚本。运行时订阅 `mw.hook('wikipage.content')`：首次打开页面、预览或其他触发此内容钩子的更新会扫描组件；重复扫描保留已挂载组件的状态。对于没有触发该钩子的第三方内容更新，可主动调用 `DUI.scan(container)`。被移除的根节点会自动卸载。
+引导脚本会加载同一目录下的 `dui.css` 和 `dui.js`。自托管时，把样式、脚本和素材域名加入站点的 CSP。用另一个域名托管字体时，字体服务器还要允许跨域读取。
 
 ### Gadget（已安装 Gadgets 扩展时）
 
-将上面的配置和 bootstrap 内容放进 `MediaWiki:Gadget-DUI.js`，并在 `MediaWiki:Gadgets-definition` 加入：
+把上面的配置和 `integration/bootstrap.js` 一起存到 `MediaWiki:Gadget-DUI.js`。在 `MediaWiki:Gadgets-definition` 加入这一行。
 
 ```text
 * DUI[ResourceLoader|default]|DUI.js
 ```
 
-可在 `MediaWiki:Gadget-DUI` 写上“DOORS 风格交互组件”。去掉 `default` 可改为用户按需启用。此方案是一个小型 ResourceLoader 引导 Gadget，完整组件和字体仍由静态发行目录提供。
+在 `MediaWiki:Gadget-DUI` 填写小工具说明。要让用户在参数设置里自行开启，删掉定义里的 `|default`。Gadget 仍从 `baseUrl` 读取组件包。
 
-## 页面中使用
+## 词条里怎么写
 
-安装完成后，在词条的源码编辑器中插入物品栏。`data-dui` 指定组件，`data-dui-props` 填写 JSON。
+在词条的源码编辑器里粘贴下面的物品栏。`data-dui` 写组件名，`data-dui-props` 写 JSON 参数。预览页面就能看到打火机、骷髅钥匙和指南针三个槽位。
 
 ```html
-<div class="dui-widget" data-dui="inventory" data-dui-props='{"label":"随身物品栏","defaultValue":null,"items":[{"id":"lighter","icon":"lighter","charge":0.8},{"id":"key","icon":"skeletonKey","count":1,"size":"sm"},{"id":"compass","icon":"compass","size":"sm","shape":"circle"}]}'>随身物品：打火机、骷髅钥匙、指南针。</div>
+<div class="dui-widget" data-dui="inventory"
+  data-dui-props='{"label":"随身物品栏","defaultValue":null,"items":[{"id":"lighter","icon":"lighter","label":"打火机","charge":0.8},{"id":"key","icon":"skeletonKey","label":"骷髅钥匙","count":1,"size":"sm"},{"id":"compass","icon":"compass","label":"指南针","size":"sm","shape":"circle"}]}'>
+  随身物品包括打火机、骷髅钥匙和指南针。
+</div>
 ```
 
-脚本加载前，页面显示容器内的文字。用单引号包住属性值，将参数文本中的单引号写成 `&#39;`。
+脚本加载前，读者会看到 `<div>` 里的文字。外层属性值用单引号括起来，JSON 字符串用双引号。值里本来就有单引号时，在词条源码里写成 `&#39;`。
 
 ### 可选模板
 
-将 `integration/Template-DUI.wikitext` 内容保存为 `Template:DUI`，之后页面中可写：
+经常在词条里用 DUI 的站点可以建一个 `Template:DUI`。静态包用 `integration/Template-DUI.wikitext`，Miraheze 投稿包用 `Template-DUI.mw`。建好模板后，词条里可以这样放按钮。
 
 ```wikitext
 {{DUI
@@ -72,34 +91,37 @@ bootstrap 使用 `mw.loader.load` 加载外部 CSS 与 IIFE 脚本。运行时�
 }}
 ```
 
-JSON 文本中如果需要字面量 `|`，在模板参数中写成 `{{!}}`。不要在已挂载的容器内部再嵌套 `dui-widget` HTML；组合组件使用 JSON `children`。
+模板把 `|` 当成参数分隔符。JSON 的文字里要显示竖线时，在模板参数中写 `{{!}}`。
 
 ### 组合面板
 
-`data-dui-props` 的 `children` 可写文本、组件对象或数组；子节点结构是 `{ "component": "名称", "props": {...}, "children": ... }`：
+要把滑块和开关放进同一个面板，把它们写进面板的 JSON `children`。这里可以填文字、一个组件对象，或由它们组成的数组。每个组件对象用 `component` 指定类型，用 `props` 传参数，也可以继续写 `children`。
 
 ```html
-<div class="dui-widget" data-dui="panel" data-dui-props='{"title":"设置","children":[{"component":"slider","props":{"label":"大厅音乐","defaultValue":20}},{"component":"switch","props":{"label":"减小动作幅度","defaultChecked":true}}]}'>大厅音乐：20；减小动作幅度：开启。</div>
+<div class="dui-widget" data-dui="panel"
+  data-dui-props='{"title":"设置","children":[{"component":"slider","props":{"label":"大厅音乐","defaultValue":20}},{"component":"switch","props":{"label":"减小动作幅度","defaultChecked":true}}]}'>
+  大厅音乐设为 20，已开启减小动作幅度。
+</div>
 ```
 
-更多可复制的物品栏、大厅、弹窗和成就例子在 `integration/examples.wikitext`。
+物品栏、大厅、弹窗和成就还有几组例子，见静态包的 `integration/examples.wikitext`。
 
 ## 使用 Wiki 文件
 
-英文和中文 DOORS Wiki 默认从当前站点查找图标、物品图片、成就徽章和已启用的交互音效。MediaWiki 优先解析本站上传的文件，也能返回本站接入的共享文件。DUI 按 `file`、组件素材配置、站点配置、DOORS Wiki 默认文件、随包素材的顺序找图。文件缺失或图片加载失败时，接着尝试下一级来源。
-
-`icon`、`item-slot` 和 `inventory` 中的单个物品都可以用 `file` 指定文件。保留 `name` 或 `icon` 可以提供后备图。若要保留原图颜色，可在 `icon` 上设置 `mask: false`。
+要给物品栏里的打火机换一张图，把 Wiki 文件名填进 `file`。下面的写法保留了 `icon: "lighter"`，站内文件找不到时还能显示默认图片。
 
 ```wikitext
 {{DUI|组件=inventory
 |参数={"items":[{"id":"lighter","icon":"lighter","file":"File:Icon lighter2.png","label":"打火机"}]}
-|后备文字=物品栏：打火机
+|后备文字=物品栏里有一只打火机
 }}
 ```
 
-要替换整组组件里使用的素材，可以在更新后的模板加 `素材={"icons/settings.svg":"File:Settings icon.svg"}`。直接写 HTML 时，用 `data-dui-assets` 存放同一份 JSON。通过 `DUI.mount` 挂载时，在组件对象顶层传 `assets`。这些配置都只作用于当前挂载的组件及其子组件。
+`icon`、`item-slot` 和物品栏里的每个物品都支持 `file`。图标默认可以随文字着色。要显示原图的颜色，在 `icon` 组件上设 `"mask": false`。
 
-管理员可以在引导脚本前设置全站素材，也可以通过 `DUI.configure({ wikiAssets: ... })` 更新。
+一组组件要一起换图，可以给模板加 `素材={"icons/settings.svg":"File:Settings icon.svg"}`。直接写 HTML 时，把同一份 JSON 放进 `data-dui-assets`。脚本调用 `DUI.mount` 时，把 `assets` 和 `props` 放在同一级。这几种写法都只影响当前组件和它的子组件。
+
+全站都用同一张图时，在加载 DUI 之前配置 `wikiAssets`。
 
 ```js
 window.DUIConfig = {
@@ -111,11 +133,11 @@ window.DUIConfig = {
 };
 ```
 
-素材键填写包内 `assets/doors/` 之后的相对路径。值填写本 Wiki 的文件名，可以带 `File:` 或 `文件:` 前缀。`preferWikiAssets: false` 可关闭 DOORS Wiki 的默认映射。其他 MediaWiki 站点也可使用 `file` 和 `wikiAssets` 指定自己的文件。字体与背景由站点 CSS 设置。
+左边填 `assets/doors/` 下的相对路径，右边填本站文件名。DUI 按 `file`、当前组件的素材配置、全站 `wikiAssets`、DOORS Wiki 默认文件、发行包默认素材的顺序查找。MediaWiki 的共享文件库也可以解析。中英文 DOORS Wiki 默认查本站文件，管理员可用 `preferWikiAssets: false` 关闭这一步。脚本加载后，仍可通过 `DUI.configure({ wikiAssets: ... })` 更新全站映射。
 
 ## 组件参数
 
-这些入口调用项目中同一套 React 组件。下表列出 Wiki 页面可以传入的参数。
+左边的名称填进 `data-dui` 或模板的 `组件`，右边的参数填进 JSON。
 
 | `data-dui` | 主要 JSON 参数 |
 | --- | --- |
@@ -143,13 +165,13 @@ window.DUIConfig = {
 | `achievement` | `achievement`（welcome/outOfMyWay/rockBottom）、`title`、`description`、`unlocked`、`progress`、`max` |
 | `dialog` | `title`、`description`、`triggerLabel`、`defaultOpen`、`closeLabel`、`closeOnBackdrop`、`footer`（文本）、`children` |
 
-未列出的参数不会转交给 DOM。图标可用：items、gallery、achievements、settings、player、search、backpack、journal、inventorySlot、close、revive、knobs、gold、candy、flashlight、compass、crucifix、candle、lighter、vitamins、lockpick、skeletonKey；完整列表以项目 `src/components/Icon/assets.ts` 为准。
-
-滑动条/开关/标签页/物品栏保持本地状态；商店卡点击后仅展示“已拥有”，**不会扣款、保存账号数据或调用游戏/Wiki 的购买接口**。刷新页面重置。搜索框仅提供输入和事件，按键提示不会抢占 Wiki 的全局搜索快捷键。需要业务行为时由站点脚本处理事件。
+常用的图标名有 `settings`、`backpack`、`lighter` 和 `skeletonKey`。完整名单见 `src/components/Icon/assets.ts`。词条参数只接受 JSON，多余的字段不会写进 DOM。组合组件用 `children`，不要在一个 `dui-widget` 容器里再嵌另一个容器。
 
 ## 站点脚本接收操作
 
-监听冒泡的 `dui:action`，`event.target` 是最外层宿主容器；`detail` 是 `{component, action, value?}`。`change` 用于输入/选择、`click` 或按钮指定的 `action` 用于按钮、`action` 用于大厅入口、`purchase` 用于商店、`open` / `close` 用于弹窗。
+组件的状态留在当前页面，刷新就会重置。商店卡里的“已拥有”用来演示购买结果。搜索框负责输入，快捷键标记只负责显示。要让组件执行本站的操作，在站点脚本里监听 `dui:action`。
+
+事件的 `target` 是最外层的 `dui-widget`，`detail` 有 `component` 和 `action`，部分事件还带 `value`。按钮发出 `click` 或指定的 `action`，输入和选择发出 `change`，大厅入口发出 `action` 并把图标名放进 `value`。商店用 `purchase`，弹窗用 `open` 和 `close`。
 
 ```js
 document.addEventListener('dui:action', function (event) {
@@ -163,33 +185,42 @@ document.addEventListener('dui:error', function (event) {
 });
 ```
 
-全局 API（IIFE）与具名 ES Module 导出相同：
+### 手动挂载和更新
+
+第一次加载页面或 MediaWiki 触发 `wikipage.content` 时，DUI 会自动查找新组件。站点脚本直接插入了一段内容时，可以调用 `DUI.scan(container)`。反复扫描不会清掉读者已经选中的物品或设置。组件从页面移除后会自动卸载。
+
+下面这段代码把货币计数挂到 `id="my-widget"` 的元素上，再把数值从 1250 更新到 1300。
 
 ```js
-DUI.scan(document);                       // 幂等扫描
-DUI.configure({ sound: true });           // 不重置已挂载组件状态
-var handle = DUI.mount(document.getElementById('my-widget'), {
-  component: 'currency', props: { kind: 'knobs', value: 1250 }
+const element = document.getElementById('my-widget');
+const handle = DUI.mount(element, {
+  component: 'currency',
+  props: { kind: 'knobs', value: 1250 }
 });
-handle.update({ component: 'currency', props: { kind: 'knobs', value: 1300 } });
-handle.unmount();                             // 恢复原来的后备内容
-DUI.unmount(document.getElementById('my-widget'));
-// DUI.destroy()：停止内容钩子与清理监听，卸载当前所有组件。
+
+handle.update({
+  component: 'currency',
+  props: { kind: 'knobs', value: 1300 }
+});
 ```
 
-`mount` / `update` 校验根节点。显式 `update` 重置该实例的本地状态；`scan` 重复执行不会重置。修改已有节点的 `data-*` 不会隐式覆盖用户操作，需要用 `update` 或先 `unmount` 再 `scan`。异常解析会保留原后备内容并标记 `data-dui-state="error"`；渲染参数异常由错误边界显示提示并发出 `dui:error`。
+`update()` 会按新参数重新初始化组件。直接改已挂载节点的 `data-*` 时，可以先 `DUI.unmount(element)`，再 `DUI.scan(element)`。`handle.unmount()` 会恢复占位内容，`DUI.destroy()` 会卸载所有组件并停止自动扫描。需要打开交互音效时，用 `DUI.configure({ sound: true })`，已挂载的组件会保留当前状态。
 
-ES Module：加载 `dui.css` 后，用 `<script type="module">` 导入 `dui.mjs`。IIFE 和 ES Module 都只在浏览器运行。发行包不依赖外部 React 全局变量。
+静态包的 `dui.js` 把这套 API 挂在 `window.DUI`。用模块脚本时，先加载同目录的 `dui.css`，再从 `dui.mjs` 导入所需的函数。两种入口都在浏览器运行，包里已经包含 React。
 
 ## 样式和部署限制
 
-组件规则及主题变量限定在 `.dui-scope` 内，大厅组合的布局规则限定在 `.dui-lobby-example` 内，CSS Modules 类名也仍然保留；包不会修改 Wiki 的 `html`、`body`、全局标题、链接或原生按钮。弹窗保留在宿主作用域内，并使用原生 dialog 顶层模态显示。组件支持键盘操作和系统“减少动态效果”偏好。
+组件主题用 `.dui-scope` 限定范围，大厅组合布局用 `.dui-lobby-example`。弹窗在组件内用原生 `<dialog>` 打开，组件支持键盘操作和系统的“减少动态效果”设置。
+
+静态包用 `baseUrl` 找图片、遮罩图标和音效，字体按 `dui.css` 的位置查找。换部署地址时，把样式和素材一起迁过去。中文用站点或系统字体，背景图由本站 CSS 设置。发行包内的 `LICENSE` 是 DUI 的项目许可，`ASSETS.md` 记录素材来源，`licenses/` 存放第三方依赖和字体许可。
+
+页面上只剩占位文字时，先检查加载脚本和样式的请求。容器带 `data-dui-state="error"` 时，检查词条里的 JSON 和组件参数。JSON 解析失败会保留占位文字，渲染出错会显示提示，两种情况都可以从 `dui:error` 读取错误信息。
 
 ## 从 0.1.0 更新大厅菜单
 
-0.1.1 修复了手机端大厅菜单的换行和溢出。商店与图标始终排成一行，按实际容器宽度缩放；`HOST GAME`、文字和播放图标使用同一缩放比例。按住图标时显示放大和反色反馈，松开或取消触摸后恢复。
+手机端大厅的换行和溢出在 0.1.1 修复。更新时把脚本和样式一起换掉。静态部署替换整个发行目录，使用 Pages 地址时确认 `dui.js` 和 `dui.css` 都已刷新缓存。Miraheze 版先更新 `DUI.css` 和 `DUI-runtime.js`，最后更新 `DUI.js`。
 
-站点需要同时更新 `dui.js` 和 `dui.css`。自托管时替换完整发行目录；使用 Pages 地址时，确认两份文件都已刷新缓存。大厅组合可以沿用下面的结构，样式已包含在 `dui.css` 中：
+有 `HOST GAME` 按钮的词条可以沿用下面的结构。按钮、文字和播放图标会一起按容器宽度缩放，下面的菜单图标保持一排。页面只放大厅菜单时，保留 `data-dui="lobby"` 的容器就够了。
 
 ```html
 <div class="dui-lobby-example">
@@ -204,17 +235,11 @@ ES Module：加载 `dui.css` 后，用 `<script type="module">` 导入 `dui.mjs`
 </div>
 ```
 
-请删除站点原先针对这组类名设置的手机端大按钮宽高、字号，以及菜单换行规则，保留所需的背景和外边距。只使用 `data-dui="lobby"` 时，不必增加外层组合。`nomobile` 由维基工作人员在更新后检查并处理，组件包不会修改它。
+删掉旧站点样式里给手机端写死的宽高、字号和菜单换行规则。背景和外边距按词条需要保留。用手机预览，检查 `HOST GAME` 的比例、图标是否排成一行，以及按下放大、松手恢复的效果。维基工作人员确认显示正常后，再处理模板上的 `nomobile`。
 
-图像、mask 图标与可选声音通过 `baseUrl` 解析；CSS 字体相对 `dui.css` 文件解析。发行包里的背景素材是可选素材，没有将任何展示页或用户截图 UI 烘焙进组件。中文优先使用站点/系统可用字体；包附带 DOORS 字体和拉丁字体，不包含整套 MiSans 字库。
+## MediaWiki 参考
 
-词条中的配置只接受 JSON，不执行字符串回调或插入 HTML；脚本由管理员安装。CSS 需要保留为独立文件，字体相对它解析。自建跨域服务器要为字体设置 CORS，站点 CSP 也需要允许所用的静态域名。
-
-素材出处见 `ATTRIBUTION.md`，依赖与拉丁字体许可证见 `licenses/`。TGZ 包用于本地安装，尚未发布到 npm。
-
-官方接入参考：
-
-- https://www.mediawiki.org/wiki/ResourceLoader/Developing_with_ResourceLoader
-- https://doc.wikimedia.org/mediawiki-core/master/js/Hooks.html
-- https://www.mediawiki.org/wiki/Extension:Gadgets
-- https://www.mediawiki.org/wiki/Help:Magic_words#Miscellaneous
+- [ResourceLoader](https://www.mediawiki.org/wiki/ResourceLoader/Developing_with_ResourceLoader)
+- [内容钩子](https://doc.wikimedia.org/mediawiki-core/master/js/Hooks.html)
+- [Gadgets 扩展](https://www.mediawiki.org/wiki/Extension:Gadgets)
+- [魔术字](https://www.mediawiki.org/wiki/Help:Magic_words#Miscellaneous)

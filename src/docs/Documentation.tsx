@@ -247,7 +247,7 @@ export function DocumentationShell({ children, actions }: { children: ReactNode;
       </Space>
       <Layout as="main" maxWidth="full" padding="none" className={styles.main} id="main-content">{children}
         <Space as="footer" size="sm" wrap className={styles.footer}>
-          <Button asChild variant="plain" size="sm"><a href="https://github.com/DOORS-Chinese-Wiki/DUI/blob/main/ATTRIBUTION.md">素材来源</a></Button>
+          <Button asChild variant="plain" size="sm"><a href="https://github.com/DOORS-Chinese-Wiki/DUI/blob/main/docs/ASSETS.md">素材来源</a></Button>
           <Button asChild variant="plain" size="sm"><a href="#overview">回到顶部 ↑</a></Button>
         </Space>
       </Layout>

@@ -1,0 +1,19 @@
+<includeonly>{{#tag:div
+|{{{fallback|{{{后备文字|Loading DUI…}}}}}}
+|class=dui-widget
+|data-dui={{{component|{{{组件|button}}}}}}
+|data-dui-props={{{props|{{{参数|}}}}}}
+|data-dui-assets={{{assets|{{{素材|}}}}}}
+}}</includeonly><noinclude>
+Inserts a [[DUI]] component. Set <code>component</code> to the component name, <code>props</code> to its JSON options, and <code>fallback</code> to the text shown before the script loads. Use <code>assets</code> to map bundled asset paths to wiki filenames for this widget.
+
+<syntaxhighlight lang="wikitext" copy>
+{{DUI
+|component=button
+|props={"label":"Open inventory","action":"open-inventory"}
+|fallback=Open inventory
+}}
+</syntaxhighlight>
+
+Use <code>{{!}}</code> for a literal pipe inside a parameter. The template also accepts <code>组件</code>, <code>参数</code>, <code>素材</code> and <code>后备文字</code>.
+</noinclude>

@@ -1,0 +1,49 @@
+'''DUI''' adds DOORS-style buttons, inventory bars, lobby menus, and settings controls to MediaWiki pages. Page editors insert a component with HTML and set its options in JSON.
+
+{{dependencies|User:Yatmt/DUI.js|User:Yatmt/DUI-runtime.js|User:Yatmt/DUI.css}}
+
+== Installation ==
+
+Add this line to your wiki's [[MediaWiki:Common.js]]. The loader fetches the runtime and stylesheet from the Miraheze Developers Wiki on pages that contain DUI components. Default images and sounds come from the WikiTide file servers.
+
+<syntaxhighlight lang="javascript" copy>
+mw.loader.load('https://dev.miraheze.org/w/index.php?title=User:Yatmt/DUI.js&action=raw&ctype=text/javascript');
+</syntaxhighlight>
+
+To load DUI only for your account, add the line to [[Special:MyPage/common.js|your personal common.js]].
+
+DUI loads DOORS Remake from the WikiTide file servers for headings and inventory slot numbers. Enable the '''Google Fonts''' CSP service in ManageWiki to also load Oswald, Rubik, and Inconsolata. The stylesheet lists system fonts as fallbacks.
+
+== Usage ==
+
+Set <code>data-dui</code> to the component name and <code>data-dui-props</code> to its JSON options. The text inside the element appears until the component loads.
+
+<syntaxhighlight lang="html" copy>
+<div class="dui-widget" data-dui="button"
+     data-dui-props='{"label":"Open inventory","action":"open-inventory"}'>
+  Open inventory
+</div>
+</syntaxhighlight>
+
+The button emits a <code>dui:action</code> event on click. Handle the event in your site script to open an inventory or perform another action.
+
+=== Wiki files ===
+
+Use <code>file</code> to select a file from your wiki. In this example, DUI tries the file first and then uses the built-in lighter image if the file is unavailable.
+
+<syntaxhighlight lang="html" copy>
+<div class="dui-widget" data-dui="inventory"
+     data-dui-props='{"label":"Inventory","items":[{"id":"lighter","icon":"lighter","file":"File:Icon lighter2.png","label":"Lighter"}]}'>
+  Inventory: lighter
+</div>
+</syntaxhighlight>
+
+The English and Chinese DOORS Wikis use their file repositories by default. Set <code>window.DUIConfig.wikiAssets</code> before loading the script to map bundled asset paths to wiki filenames for the whole site.
+
+== See also ==
+
+* [[DUI/Demo|Component examples]]
+* [https://github.com/DOORS-Chinese-Wiki/DUI/blob/main/docs/MEDIAWIKI.md Component parameters and self-hosting]
+* [https://github.com/DOORS-Chinese-Wiki/DUI Source code and asset credits]
+
+[[Category:Scripts]]

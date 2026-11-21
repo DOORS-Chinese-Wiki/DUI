@@ -16,7 +16,8 @@ await cp(join(root, 'mediawiki'), join(out, 'integration'), {
 });
 await cp(join(root, 'mediawiki/standalone.html'), join(out, 'index.html'));
 await cp(join(root, 'docs/MEDIAWIKI.md'), join(out, 'README.md'));
-await cp(join(root, 'ATTRIBUTION.md'), join(out, 'ATTRIBUTION.md'));
+await cp(join(root, 'docs/ASSETS.md'), join(out, 'ASSETS.md'));
+await cp(join(root, 'LICENSE'), join(out, 'LICENSE'));
 const thirdParty = ['react', 'react-dom', 'scheduler', '@radix-ui/react-slot', '@radix-ui/react-compose-refs', 'clsx',
   '@fontsource-variable/oswald', '@fontsource-variable/rubik', '@fontsource-variable/inconsolata'];
 await mkdir(join(out, 'licenses'), { recursive: true });
@@ -27,7 +28,7 @@ for (const dependency of thirdParty) {
   await cp(join(directory, license), join(out, 'licenses', dependency.replaceAll('/', '-') + '.txt'), { recursive: false });
 }
 await writeFile(join(out, 'package.json'), JSON.stringify({
-  name: 'dui-mediawiki', version: pkg.version, private: true, type: 'module',
+  name: 'dui-mediawiki', version: pkg.version, license: pkg.license, private: true, type: 'module',
   description: 'Self-contained DUI widgets for MediaWiki',
   main: './dui.mjs', module: './dui.mjs', unpkg: './dui.js', jsdelivr: './dui.js',
   types: './types/src/mediawiki/api.d.ts',

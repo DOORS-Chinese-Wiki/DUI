@@ -11,6 +11,8 @@ export function AssetProvider({ baseUrl, lookup, children }: { baseUrl?: string;
 }
 
 export function resolveAssetUrl(source: string, baseUrl?: string) {
+  const mirahezeAssets: Record<string, string> | undefined = import.meta.env.DUI_MIRAHEZE_ASSETS;
+  if (mirahezeAssets && Object.prototype.hasOwnProperty.call(mirahezeAssets, source)) return mirahezeAssets[source];
   if (!baseUrl || !source.startsWith('/assets/doors/')) return source;
   return new URL(source.slice(1), new URL(baseUrl, typeof document === 'undefined' ? undefined : document.baseURI)).href;
 }
