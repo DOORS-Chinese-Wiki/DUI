@@ -36,9 +36,9 @@ const lobbyIconButtonApi = { component: 'LobbyIconButton', props: props([
 export const docPages = {
   panel: {
     title: '面板', component: 'Panel', group: '布局组件',
-    description: '沿用设置面板的深棕底色、奶油色描边与分组标题。Panel 与 PanelSection 可组合按钮、滑动条、开关和页脚操作。',
+    description: 'Panel 容纳标题、内容和页脚。用 PanelSection 给控件分组。',
     imports: "import { Panel, PanelSection } from './components';",
-    note: '关闭、保存和恢复默认由使用方处理。面板只组织内容，不接管子组件状态；示例会保留当前演示设置。',
+    note: '在父组件中处理关闭、保存和恢复默认。',
     api: [
       { component: 'Panel', props: props([
         ['title', 'ReactNode', '必填', '面板标题，同时作为区域的无障碍名称。'],
@@ -56,9 +56,9 @@ export const docPages = {
   },
   search: {
     title: '搜索与按键', component: 'SearchField / Kbd', group: '输入组件',
-    description: '基于维基搜索框风格的输入框与按键提示。复用已有搜索图标，支持原生输入属性、受控值和输入框 ref。',
+    description: 'SearchField 是带搜索图标和快捷键提示的输入框。',
     imports: "import { SearchField, Kbd } from './components';",
-    note: 'shortcut 只显示按键提示，快捷键逻辑由使用方绑定。文档顶部支持 /、Ctrl+K 和 ⌘K；下方示例只演示局部筛选。',
+    note: '用 shortcut 显示按键，在页面中绑定对应的快捷键。',
     api: [
       { component: 'SearchField', props: props([
         ['value / defaultValue', 'string', '—', '原生受控或非受控搜索值。'],
@@ -77,9 +77,9 @@ export const docPages = {
   },
   tabs: {
     title: '标签页', component: 'Tabs', group: '导航组件',
-    description: '使用现有 Button 切换同一上下文中的内容。支持受控与非受控选择、禁用项、方向键和 Home / End。',
+    description: 'Tabs 在同一块区域切换内容。切换后，原面板中的输入值保留。',
     imports: "import { Tabs, type TabItem } from './components';",
-    note: '标签使用自动激活模式，键盘焦点移动时同步切换内容，并跳过禁用项。未激活面板仍保留挂载，子控件状态不会丢失。',
+    note: '左右方向键切换标签并跳过禁用项。Home 和 End 跳到首尾可用项。',
     api: [{ component: 'Tabs', props: props([
       ['items', 'TabItem[]', '必填', '每项包含 value、label、content，可选 icon 与 disabled。value 应唯一。'],
       ['label', 'string', '必填', '标签组的无障碍名称。'],
@@ -89,9 +89,9 @@ export const docPages = {
   },
   inventory: {
     title: '物品栏', component: 'InventoryBar', group: '物品与商店',
-    description: '按实机参考呈现半透明物品位、描边数字牌、资源条和圆形工具位。与大厅按钮共用缓动实现，物品位使用 25% 放大、描边高亮与相邻让位。',
+    description: '物品栏按一行排列。悬停时物品位放大，旁边的物品让位。窄屏横向滚动。',
     imports: "import { ItemSlot, InventoryBar, type InventoryItem } from './components';",
-    note: '方向键、Home / End 和数字键只在栏内生效。示例物品来自已收录的维基素材，布局和动效按实机图调整；资源条与数量为演示值。窄屏保留单行并允许横向滚动。',
+    note: '用 count 显示数量，用 charge 设置剩余资源。焦点在物品栏内时，按 1 到 9 选取对应槽位。',
     api: [
       { component: 'InventoryBar', props: props([
         ['items', 'InventoryItem[]', '必填', '每项包含唯一 id，可选 icon、label、count、disabled、size、shape 和 charge。'],
@@ -113,9 +113,8 @@ export const docPages = {
   },
   currency: {
     title: '货币展示', component: 'CurrencyDisplay', group: '数据展示',
-    description: '用原始旋钮、金币、复活与糖果素材显示数量。自动添加千位分隔符，组合成可换行的资源信息栏。',
+    description: '显示门把手、金币、复活次数和糖果数量。数值按千位分组。',
     imports: "import { CurrencyDisplay, CurrencyGroup } from './components';",
-    note: '数量是演示数据。组件只负责展示，不读取游戏账户，不改变既有设置面板的 HUD。',
     api: [
       { component: 'CurrencyDisplay', props: props([
         ['kind', "'knobs' | 'gold' | 'revive' | 'candy'", '必填', '使用的资源素材。'],
@@ -132,9 +131,9 @@ export const docPages = {
   },
   shop: {
     title: '商店物品卡', component: 'ShopItemCard', group: '物品与商店',
-    description: '组合 Panel、Icon、CurrencyDisplay 与 Button，展示物品、价格和购买状态。支持可购买、已拥有、售罄与禁用状态。',
+    description: '商店卡显示物品、价格和购买状态。',
     imports: "import { ShopItemCard } from './components';",
-    note: '示例购买会扣除本地演示余额并禁用重复购买，不发起网络请求。价格与库存不代表当前游戏商店。',
+    note: '示例购买扣除页面上的演示余额，并将物品标为已拥有。',
     api: [{ component: 'ShopItemCard', props: props([
       ['item', 'DoorsIconName', '必填', '物品素材名称。'],
       ['name / description', 'string / ReactNode', '素材名称 / —', '物品名称与说明。'],
@@ -148,9 +147,8 @@ export const docPages = {
   },
   achievements: {
     title: '成就卡', component: 'AchievementCard', group: '数据展示',
-    description: '使用维基徽章图展示成就的锁定、解锁与进度状态。进度采用原生 progress 元素，并提供可读名称与数值。',
+    description: '成就卡显示徽章、解锁状态和完成进度。',
     imports: "import { AchievementCard, doorsAchievementAssets } from './components';",
-    note: '徽章图来自维基，示例描述和进度只用于展示组件行为，不代表游戏中的成就条件。',
     api: [{ component: 'AchievementCard', props: props([
       ['achievement', 'DoorsAchievementName', '必填', '内置徽章：welcome、outOfMyWay、rockBottom。'],
       ['title / description', 'string / ReactNode', '徽章名称 / —', '标题与说明。'],
@@ -161,9 +159,9 @@ export const docPages = {
   },
   dialog: {
     title: '弹窗', component: 'Dialog', group: '交互能力',
-    description: '基于原生 dialog 与共用 Panel 的模态窗口。提供焦点约束、Escape 关闭、触发器焦点恢复和背景滚动锁定。',
+    description: '弹窗打开后，键盘焦点留在窗口内。按 Esc 关闭，焦点回到打开按钮。',
     imports: "import { Dialog, Button } from './components';",
-    note: 'open 由父组件控制。弹窗通过 Portal 挂载到 body 并进入原生顶层，避免被文档预览或其他容器裁切。',
+    note: '在父组件中用 open 控制开关，在 onOpenChange 中更新状态。',
     api: [{ component: 'Dialog', props: props([
       ['open', 'boolean', '必填', '是否打开弹窗。'],
       ['onOpenChange', '(open: boolean) => void', '必填', 'Escape、关闭按钮或遮罩请求关闭时触发。'],
@@ -176,9 +174,9 @@ export const docPages = {
   },
   actions: {
     title: '按钮', component: 'Button', group: '基础组件',
-    description: '触发操作或提交选择。通过类型、尺寸和状态区分操作层级，支持图标、加载反馈与原生 button 属性。',
+    description: '用 Button 触发操作。通过 variant 选择样式，用 loading 显示加载状态。',
     imports: "import { Button, Icon } from './components';",
-    note: '仅包含图标的按钮需要 aria-label。基础 Button 保持稳定尺寸；大厅风格的图标入口使用 LobbyIconButton，由共用组件提供放大、反色与让位反馈。',
+    note: '纯图标按钮需要 aria-label。链接按钮使用 asChild，并传入一个 a 元素。',
     api: [{ component: 'Button', props: props([
       ['variant', "'primary' | 'secondary' | 'ghost' | 'plain' | 'danger'", "'primary'", '按钮的视觉层级。'],
       ['size', "'sm' | 'md' | 'lg'", "'md'", '按钮高度、内边距和字号。'],
@@ -192,9 +190,8 @@ export const docPages = {
   },
   icons: {
     title: '图标', component: 'Icon', group: '基础组件',
-    description: '使用大厅菜单中的真实图标按钮。LobbyIconButton 组合 Button 与 Icon，统一圆角、描边、反色及 14% 放大缓动；LobbyMenu 负责排列和相邻按钮让位。',
+    description: 'Icon 显示图标。LobbyIconButton 把图标做成大厅入口。',
     imports: "import { LobbyMenu, LobbyIconButton, Icon } from './components';",
-    note: '此处是 LobbyMenu 的图标实例，与大厅示例共用 src/components/LobbyMenu 中的组件和样式。Icon 只绘制素材；需要交互入口时使用 LobbyIconButton，不再单独添加 framed 底板。',
     api: [lobbyIconButtonApi, lobbyMenuApi, { component: 'Icon', props: props([
       ['name', 'DoorsIconName', '—', '项目内置的界面或物品图标名称。'],
       ['src', 'string', '—', '自定义素材路径，优先于 name。'],
@@ -206,7 +203,7 @@ export const docPages = {
   },
   typography: {
     title: '文字', component: 'Text', group: '基础组件',
-    description: '通过统一字阶和语义元素组织标题、正文与代码。显示样式与 HTML 标签可以独立选择。',
+    description: '用 variant 选择字阶，用 as 指定 HTML 标签。',
     imports: "import { Text } from './components';",
     api: [{ component: 'Text', props: props([
       ['as', 'ElementType', "'span'", '实际渲染的 HTML 元素。'],
@@ -218,9 +215,9 @@ export const docPages = {
   },
   slider: {
     title: '滑动条', component: 'Slider', group: '输入组件',
-    description: '在连续区间内调整数值。保留原生 range 的键盘操作，并提供圆点刻度、填充轨道和独立圆角滑块。',
+    description: '用 Slider 调整音量等数值。min、max 和 step 决定范围与步长。',
     imports: "import { Slider } from './components';",
-    note: '使用方向键微调，Home / End 跳转到区间端点。轨道圆角只在起点至第一个圆点之间变化，到达圆点后保持固定。',
+    note: '方向键按步长调整数值。Home 和 End 分别跳到最小值和最大值。',
     api: [{ component: 'Slider', props: props([
       ['label / description', 'ReactNode', '—', '可访问名称和辅助说明。'],
       ['value', 'number', '—', '受控数值，配合 onValueChange 使用。'],
@@ -233,9 +230,9 @@ export const docPages = {
   },
   switch: {
     title: '开关', component: 'Switch', group: '输入组件',
-    description: '立即开启或关闭一个独立选项。标签和说明与原生 checkbox 关联，支持受控与非受控模式。',
+    description: '用 Switch 开启或关闭一项设置。点击标签或按空格切换。',
     imports: "import { Switch } from './components';",
-    note: '用 Tab 聚焦后按空格切换。onChange 接收原生事件，onCheckedChange 直接提供 boolean。',
+    note: 'onChange 的参数是原生事件。onCheckedChange 的参数是布尔值。',
     api: [{ component: 'Switch', props: props([
       ['label / description', 'ReactNode', '—', '选项名称和补充说明。'],
       ['checked', 'boolean', '—', '受控开关状态。'],
@@ -247,9 +244,9 @@ export const docPages = {
   },
   layout: {
     title: '布局', component: 'Layout & Space', group: '布局组件',
-    description: '用容器限制阅读宽度，通过 Space 排列内容，用 Grid 创建网格，再用 Divider 划分层级。',
+    description: 'Layout 限制内容宽度。Space 排列一组元素，Grid 划分列，Divider 分隔内容。',
     imports: "import { Layout, Space, Grid, Divider } from './components';",
-    note: 'Grid 默认使用自适应网格。需要严格固定 columns 时，同时设置 responsive={false}。',
+    note: '固定列数时，设置 columns 和 responsive={false}。',
     api: [
       { component: 'Layout', props: props([
         ['as', 'ElementType', "'div'", '容器使用的 HTML 元素。'],
@@ -277,7 +274,7 @@ export const docPages = {
   },
   sound: {
     title: '音效', component: 'SoundProvider', group: '交互能力',
-    description: '为 Button 的移入、移出和操作事件提供可选音效。默认关闭，由用户主动开启，播放失败不会阻断交互。',
+    description: 'SoundProvider 为内部按钮提供交互音效。设置 enabled 后启用。',
     imports: "import { SoundProvider, Button } from './components';",
     api: [{ component: 'SoundProvider', props: props([
       ['children', 'ReactNode', '必填', '需要共享音效配置的组件。'],
@@ -288,16 +285,15 @@ export const docPages = {
   },
   lobby: {
     title: '大厅', component: 'LobbyMenu', group: '组合示例',
-    description: '组合主操作按钮与 LobbyMenu，复刻大厅快捷入口。图标按钮与 Icon 文档实例使用同一组件，移入或聚焦时放大、反色，并推动相邻按钮让位。',
+    description: 'HOST GAME 位于上方，商店和快捷入口排成一行。窄屏按容器宽度缩放。',
     imports: "import { Button, LobbyMenu, Space } from './components';",
-    note: '预览直接运行 LobbyExample.tsx，同名 CSS 模块只负责背景和主操作布局。手机端仍按一行排列，主按钮和菜单随容器一起缩小。菜单按钮及 14% 放大缓动统一由 src/components/LobbyMenu 实现。',
     api: [lobbyMenuApi, lobbyIconButtonApi],
   },
   settings: {
     title: '设置面板', component: 'Settings panel', group: '组合示例',
-    description: '将滑动条、开关与图标操作组合为游戏设置面板。试着调整音量和切换选项，查看组件在实际场景中的表现。',
+    description: '设置面板用滑动条调整音量，用开关切换游戏选项。',
     imports: "import { Slider, Switch, Space } from './components';",
-    note: '这是组件交互演示，设置只在当前页面内生效，不会写入真实游戏或持久化到服务器。',
+    note: '设置保留在当前页面，刷新后恢复默认值。',
     api: [],
   },
 } satisfies Record<string, DocPage>;

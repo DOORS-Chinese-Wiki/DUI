@@ -77,10 +77,6 @@ function ExampleFiles({ definition, label }: { definition: ExampleDefinition; la
       <CodeBlock key={file.path} code={file.source} filename={file.filename}
         label={file.language === 'css' ? label + '样式' : label} />
     </Layout>
-    <Text as="p" variant="small" tone="inherit" className={styles.sourceNote}>
-      预览直接运行此示例。复用时请同时保存 TSX 与 CSS 文件，并保留源码中的相对导入路径。
-      <Text variant="code" tone="inherit">{file.path}</Text>
-    </Text>
   </Layout>;
 }
 
@@ -106,7 +102,6 @@ function Example({ id, page }: { id: DocId; page: DocPage }) {
           {value === 'preview' ? '预览' : '代码'}
         </Button>)}
       </Space>
-      <Text variant="caption" tone="inherit" className={styles.exampleMeta}><span /> React · TSX</Text>
     </Space>
     <Layout maxWidth="full" padding="none" className={styles.preview} data-example={id} role="tabpanel" tabIndex={0}
       id={`${uid}-preview-panel`} aria-labelledby={`${uid}-preview-tab`} hidden={mode !== 'preview'}>
@@ -122,21 +117,17 @@ export function DocumentationSection({ id }: { id: DocId }) {
   const page: DocPage = docPages[id];
   return <Layout as="section" maxWidth="full" padding="none" id={id} data-doc-section className={styles.docSection} aria-label={page.title}>
     <Divider className={styles.sectionDivider} />
-    <Text as="div" variant="caption" tone="inherit" className={styles.sectionEyebrow}>{page.group}</Text>
-    <Text as="h2" variant="h2" tone="inherit" id={`${id}-title`}><span>{page.component}</span><Text as="span" variant="caption" tone="inherit" className={styles.chineseTitle}>{page.title}</Text>
+    <Text as="h2" variant="h2" tone="inherit" id={`${id}-title`}><span>{page.title}</span>{page.component !== page.title && id !== 'settings' && <code className={styles.componentName}>{page.component}</code>}
       <a href={`#${id}`} aria-label={`链接到${page.title}`} className={styles.anchor}>#</a>
     </Text>
-    <Text as="p" variant="small" tone="inherit" className={styles.description}>{page.description}</Text>
-    <Space size="md" align="center" className={styles.importLine}><Text as="code" variant="code" tone="inherit">{page.imports}</Text><Text variant="caption" tone="inherit">源码导入</Text></Space>
-    <Text as="h3" variant="h3" tone="inherit" className={styles.subheading}>交互示例</Text>
+    <Text as="p" variant="body" tone="inherit" className={styles.description}>{page.description}</Text>
+    <Text as="h3" variant="h3" tone="inherit" className={styles.subheading} id={`${id}-usage`}>用法</Text>
+    <pre className={styles.importLine}><code><HighlightedCode code={page.imports} /></code></pre>
+    {page.note && <Text as="p" variant="body" tone="inherit" className={styles.description}>{page.note}</Text>}
+    <Text as="h3" variant="h3" tone="inherit" className={styles.subheading}>示例</Text>
     <Example id={id} page={page} />
-    <Space size="sm" align="baseline" className={styles.usageNote} id={`${id}-usage`}>
-      <span aria-hidden="true">i</span>
-      <Text as="p" variant="small" tone="inherit">{page.note ?? '支持 className、style 和对应原生元素的 HTML 属性，可在不修改组件内部实现的情况下扩展样式。'}</Text>
-    </Space>
     {page.api.length > 0 ? <Layout maxWidth="full" padding="none" id={`${id}-api`} className={styles.apiSection}>
-      <Text as="h3" variant="h3" tone="inherit">API 参考</Text>
-      <Text as="p" variant="small" tone="inherit">以下列出组件扩展属性；原生元素属性可直接传入。</Text>
+      <Text as="h3" variant="h3" tone="inherit">API</Text>
       {page.api.map(api => <Layout maxWidth="full" padding="none" key={api.component} className={styles.apiGroup}>
         {page.api.length > 1 ? <Text as="h4" variant="h3" tone="inherit">{api.component}</Text> : null}
         <Layout maxWidth="full" padding="none" className={styles.tableScroll} tabIndex={0} role="region" aria-label={`${page.title}：${api.component}属性表`}>
@@ -156,29 +147,27 @@ export function DocumentationSection({ id }: { id: DocId }) {
 
 export function DocumentationIntro() {
   return <Layout as="section" maxWidth="full" padding="none" id="overview" data-doc-section className={styles.introduction} aria-labelledby="overview-title">
-    <Space size="sm" align="center" className={styles.breadcrumb}>文档 <span>/</span> 开始使用</Space>
-    <Space size="md" align="center" className={styles.introTitle}><Text as="h1" variant="h1" tone="inherit" id="overview-title">组件文档</Text><Text as="span" variant="caption" tone="inherit" className={styles.version}>v{version}</Text></Space>
-    <Text as="p" variant="small" tone="inherit" className={styles.introLead}>DOORS 风格的按钮、物品栏和设置界面。</Text>
-    <Text as="p" variant="small" tone="inherit" className={styles.description}>DUI 用 React 和 TypeScript 编写。这份文档可以直接操作组件、查看对应源码，也可以下载浏览器包，在 MediaWiki 页面中使用。</Text>
+    <div className={styles.introTitle}>
+      <Text as="h1" variant="h1" tone="inherit" id="overview-title">DUI</Text>
+      <Text as="p" variant="body" tone="inherit" className={styles.introLead}>DOORS 风格的 React 组件库</Text>
+    </div>
     <Space size="md" align="center" wrap className={styles.introLinks}>
-      <Button asChild trailingIcon={<span aria-hidden="true">→</span>}><a href="#actions">浏览组件</a></Button>
-      <Button asChild variant="secondary" trailingIcon={<span aria-hidden="true">↗</span>}><a href="#lobby">查看大厅示例</a></Button>
-      <Button asChild variant="plain"><a href="https://github.com/DOORS-Chinese-Wiki/DUI/blob/main/docs/MEDIAWIKI.md">MediaWiki 安装说明</a></Button>
-      <Button asChild variant="plain"><a href={`${import.meta.env.BASE_URL}downloads/dui-mediawiki-${version}.zip`}>下载 Wiki 组件包</a></Button>
+      <Button asChild><a href="#quick-start">开始使用</a></Button>
+      <Button asChild variant="secondary"><a href="#actions">浏览组件</a></Button>
     </Space>
-    <Layout maxWidth="full" padding="none" className={styles.projectNote}><Text variant="caption" tone="inherit">使用方式</Text><Text as="p" variant="small" tone="inherit">React 项目从 <Text as="code" variant="code" tone="inherit">src/components</Text> 引入组件。MediaWiki 使用单独构建的 JS、CSS 和素材包，页面通过 <Text as="code" variant="code" tone="inherit">data-dui</Text> 配置组件。</Text></Layout>
     <Layout maxWidth="full" padding="none" id="quick-start" className={styles.quickStart}>
-      <Text as="h2" variant="h2" tone="inherit">开始使用</Text>
-      <Text as="p" variant="small" tone="inherit">入口 <Text as="code" variant="code" tone="inherit">src/main.tsx</Text> 已加载 <Text as="code" variant="code" tone="inherit">./styles/global.css</Text>，包含字体、颜色和间距 token。直接从 <Text as="code" variant="code" tone="inherit">./components</Text> 引入需要的组件。</Text>
+      <Text as="h2" variant="h2" tone="inherit">在 React 中使用</Text>
+      <Text as="p" variant="body" tone="inherit">在仓库目录运行 <code>npm ci</code> 和 <code>npm run dev</code>。项目入口已加载主题样式。在 <code>src/App.tsx</code> 中导入组件。</Text>
       <CodeBlock code={quickStartCode} label="快速开始" filename="src/App.tsx" />
-      <Space size="lg" align="center" wrap className={styles.quickPreview}><Text variant="caption" tone="inherit">运行效果</Text><Button leadingIcon={<Icon name="items" size={20} />}>打开物品栏</Button></Space>
+      <Space size="lg" align="center" className={styles.quickPreview}><Button leadingIcon={<Icon name="items" size={20} />}>打开物品栏</Button></Space>
     </Layout>
-    <Layout maxWidth="full" padding="none" className={styles.conventions} id="conventions">
-      <Text as="h2" variant="h2" tone="inherit">设计与交互约定</Text>
-      <Grid as="dl" columns={1} gap="none" responsive={false}><Grid columns={2} gap="none" responsive={false}><Text as="dt" variant="small" tone="inherit">视觉</Text><Text as="dd" variant="small" tone="inherit">深棕底色、奶油描边、DOORS 展示字体。</Text></Grid>
-        <Grid columns={2} gap="none" responsive={false}><Text as="dt" variant="small" tone="inherit">操作</Text><Text as="dd" variant="small" tone="inherit">原生输入语义、可见键盘焦点、可选交互音效。</Text></Grid>
-        <Grid columns={2} gap="none" responsive={false}><Text as="dt" variant="small" tone="inherit">状态</Text><Text as="dd" variant="small" tone="inherit">Slider 与 Switch 同时支持受控和非受控用法。</Text></Grid>
-      </Grid>
+    <Layout maxWidth="full" padding="none" className={styles.quickStart} id="conventions">
+      <Text as="h2" variant="h2" tone="inherit">接入 MediaWiki</Text>
+      <Text as="p" variant="body" tone="inherit">管理员加载 <code>dui.js</code> 和 <code>dui.css</code> 后，在词条中用 <code>data-dui</code> 指定组件，用 JSON 填写参数。</Text>
+      <Space size="sm" wrap>
+        <Button asChild variant="secondary"><a href="https://github.com/DOORS-Chinese-Wiki/DUI/blob/main/docs/MEDIAWIKI.md">安装说明</a></Button>
+        <Button asChild variant="plain"><a href={`${import.meta.env.BASE_URL}downloads/dui-mediawiki-${version}.zip`}>下载 Wiki 组件包</a></Button>
+      </Space>
     </Layout>
   </Layout>;
 }
@@ -221,8 +210,11 @@ export function DocumentationShell({ children, actions }: { children: ReactNode;
     <a className={styles.skipLink} href="#main-content">跳到主要内容</a>
     <header className={styles.header}>
       <Layout maxWidth="full" padding="none" className={styles.headerInner}>
-        <a className={styles.brand} href="#overview" aria-label="DUI 文档首页"><span className={styles.brandMark} aria-hidden="true">01</span><span>DUI</span><Text as="span" variant="caption" tone="inherit" className={styles.docsBadge}>文档</Text></a>
-        <nav className={styles.topNav} aria-label="站点导航"><Button asChild variant="primary" size="sm"><a href="#overview" aria-current="page">文档</a></Button><Button asChild variant="plain" size="sm"><a href="#lobby">组合示例</a></Button></nav>
+        <a className={styles.brand} href="#overview" aria-label="DUI 文档首页">DUI</a>
+        <nav className={styles.topNav} aria-label="站点导航">
+          <Button asChild variant="plain" size="sm"><a href="#conventions">MediaWiki</a></Button>
+          <Button asChild variant="plain" size="sm"><a href="https://github.com/DOORS-Chinese-Wiki/DUI">GitHub</a></Button>
+        </nav>
         <SearchField ref={searchRef} className={styles.searchBox} aria-label="搜索组件文档" placeholder="搜索组件文档…" value={query}
           aria-keyshortcuts="/ Control+k Meta+k" title="按 /、Ctrl+K 或 ⌘K 搜索组件文档"
           onChange={event => { setQuery(event.target.value); setMenuOpen(Boolean(event.target.value)); }}
@@ -239,27 +231,36 @@ export function DocumentationShell({ children, actions }: { children: ReactNode;
     <Grid gap="none" responsive={false} className={styles.frame}>
       <Space as="aside" direction="vertical" size="none" className={styles.sidebar} id="docs-sidebar" data-open={menuOpen}>
         <Space as="nav" direction="vertical" size="xs" aria-label="组件文档导航">
-          {!needle ? <Space direction="vertical" size="none" className={styles.navGroup}><Text as="h2" variant="h2" tone="inherit">开始</Text><Button asChild variant={active === 'overview' ? 'primary' : 'plain'} size="sm"><a href="#overview" aria-current={active === 'overview' ? 'location' : undefined} onClick={() => select('overview')}><span>概览</span><Text as="span" variant="caption" tone="inherit" className={styles.navHint}>Introduction</Text></a></Button><Button asChild variant="plain" size="sm"><a href="#quick-start" onClick={() => select('overview')}>快速开始</a></Button><Button asChild variant="plain" size="sm"><a href="#conventions" onClick={() => select('overview')}>设计约定</a></Button></Space> : <Text as="p" variant="small" tone="inherit" className={styles.searchSummary} role="status">找到 {entries.length} 个条目</Text>}
-          {groups.map(group => <Space direction="vertical" size="none" className={styles.navGroup} key={group}><Text as="h2" variant="h2" tone="inherit">{group}</Text>{entries.filter(id => docPages[id].group === group).map(id => <Button key={id} asChild variant={active === id ? 'primary' : 'plain'} size="sm"><a href={`#${id}`} onClick={() => select(id)} aria-current={active === id ? 'location' : undefined}><span>{docPages[id].component}</span><Text as="span" variant="caption" tone="inherit" className={styles.navHint}>{docPages[id].title}</Text></a></Button>)}</Space>)}
-          {entries.length === 0 ? <Text as="p" variant="small" tone="inherit" className={styles.emptySearch}>没有匹配的组件。试试 Button、滑动条或图标。</Text> : null}
+          {!needle && <Space direction="vertical" size="none" className={styles.navGroup}>
+            <Text as="h2" variant="body" tone="inherit">入门</Text>
+            <Button asChild variant="plain" size="sm"><a href="#quick-start" onClick={() => select('overview')}>React</a></Button>
+            <Button asChild variant="plain" size="sm"><a href="#conventions" onClick={() => select('overview')}>MediaWiki</a></Button>
+          </Space>}
+          {groups.map(group => <Space direction="vertical" size="none" className={styles.navGroup} key={group}>
+            <Text as="h2" variant="body" tone="inherit">{group}</Text>
+            {entries.filter(id => docPages[id].group === group).map(id => <Button key={id} asChild variant={active === id ? 'primary' : 'plain'} size="sm">
+              <a href={`#${id}`} onClick={() => select(id)} aria-current={active === id ? 'location' : undefined}>{docPages[id].title}</a>
+            </Button>)}
+          </Space>)}
+          {entries.length === 0 && <Text as="p" variant="body" tone="inherit" role="status" className={styles.emptySearch}>没有匹配的组件。</Text>}
         </Space>
-        <Space size="xs" align="center" className={styles.sidebarFooter}><span className={styles.statusDot} /><span>源码文档</span><Text as="code" variant="code" tone="inherit">v{version}</Text></Space>
       </Space>
       <Layout as="main" maxWidth="full" padding="none" className={styles.main} id="main-content">{children}
-        <Space as="footer" direction="vertical" size="xxs" className={styles.footer}><Text as="p" variant="small" tone="inherit">DUI · React + TypeScript</Text><Text as="p" variant="small" tone="inherit">素材出处见仓库的 ATTRIBUTION.md。</Text><Button asChild variant="plain" size="sm"><a href="#overview">回到文档顶部 ↑</a></Button></Space>
+        <Space as="footer" size="sm" wrap className={styles.footer}>
+          <Button asChild variant="plain" size="sm"><a href="https://github.com/DOORS-Chinese-Wiki/DUI/blob/main/ATTRIBUTION.md">素材来源</a></Button>
+          <Button asChild variant="plain" size="sm"><a href="#overview">回到顶部 ↑</a></Button>
+        </Space>
       </Layout>
-      <aside className={styles.toc} aria-label="本节目录"><Text variant="caption" tone="inherit">本节目录</Text>
+      <aside className={styles.toc} aria-label="本节目录"><Text variant="body" tone="inherit">本节目录</Text>
         {active === 'overview' || !currentPage ? <Space as="nav" direction="vertical" size="xs">
-          <Button asChild variant="plain" size="sm"><a href="#overview">概览</a></Button>
-          <Button asChild variant="plain" size="sm"><a href="#quick-start">开始使用</a></Button>
-          <Button asChild variant="plain" size="sm"><a href="#conventions">设计与交互约定</a></Button>
+          <Button asChild variant="plain" size="sm"><a href="#quick-start">React</a></Button>
+          <Button asChild variant="plain" size="sm"><a href="#conventions">MediaWiki</a></Button>
         </Space> : <Space as="nav" direction="vertical" size="xs">
-          <Button asChild variant="plain" size="sm"><a href={`#${active}`}>{currentPage.component}</a></Button>
-          <Button asChild variant="plain" size="sm"><a href={`#${active}-examples`}>交互示例</a></Button>
-          <Button asChild variant="plain" size="sm"><a href={`#${active}-usage`}>使用说明</a></Button>
-          {currentPage.api.length > 0 ? <Button asChild variant="plain" size="sm"><a href={`#${active}-api`}>API 参考</a></Button> : null}
+          <Button asChild variant="plain" size="sm"><a href={`#${active}`}>{currentPage.title}</a></Button>
+          <Button asChild variant="plain" size="sm"><a href={`#${active}-usage`}>用法</a></Button>
+          <Button asChild variant="plain" size="sm"><a href={`#${active}-examples`}>示例</a></Button>
+          {currentPage.api.length > 0 ? <Button asChild variant="plain" size="sm"><a href={`#${active}-api`}>API</a></Button> : null}
         </Space>}
-        <Text as="div" variant="caption" tone="inherit" className={styles.tocNote}>预览中的控件可直接操作。切换到「代码」查看对应写法。</Text>
       </aside>
     </Grid>
   </Layout>;

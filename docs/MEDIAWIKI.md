@@ -1,10 +1,10 @@
-# DUI · MediaWiki 部署
+# 在 MediaWiki 中使用 DUI
 
-DUI 的浏览器包可以放进 MediaWiki 页面。管理员加载 JS 和 CSS 后，页面作者写一个带 `data-dui` 的容器，就能使用物品栏、设置面板或其他组件。React 已包含在包内。
+DUI 的浏览器包提供组件脚本、样式和素材。管理员安装后，词条编辑者用 `data-dui` 和 JSON 参数插入组件。
 
 ## 获取组件包
 
-可以从组件文档下载 ZIP，也可以在项目目录自行构建：
+从组件文档下载 ZIP，或在项目目录运行以下命令。
 
 ```sh
 npm ci
@@ -52,13 +52,13 @@ bootstrap 使用 `mw.loader.load` 加载外部 CSS 与 IIFE 脚本。运行时�
 
 ## 页面中使用
 
-在 Wiki 页面的源代码编辑器中加入下面的内容，保存后应出现物品栏：
+安装完成后，在词条的源码编辑器中插入物品栏。`data-dui` 指定组件，`data-dui-props` 填写 JSON。
 
 ```html
 <div class="dui-widget" data-dui="inventory" data-dui-props='{"label":"随身物品栏","defaultValue":null,"items":[{"id":"lighter","icon":"lighter","charge":0.8},{"id":"key","icon":"skeletonKey","count":1,"size":"sm"},{"id":"compass","icon":"compass","size":"sm","shape":"circle"}]}'>随身物品：打火机、骷髅钥匙、指南针。</div>
 ```
 
-容器中的文字在脚本未加载时显示。`data-dui` 指定组件，`data-dui-props` 填 JSON 参数。属性外层使用单引号，参数文本中的单引号写成 `&#39;`；也可以使用下面的模板处理属性。
+脚本加载前，页面显示容器内的文字。用单引号包住属性值，将参数文本中的单引号写成 `&#39;`。
 
 ### 可选模板
 

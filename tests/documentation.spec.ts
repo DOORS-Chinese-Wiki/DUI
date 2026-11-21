@@ -87,7 +87,7 @@ test('mobile navigation opens and closes after selecting a section', async ({ pa
   await expect(navigation).toBeHidden();
   await page.getByRole('button', { name: '打开文档导航' }).click();
   await expect(navigation).toBeVisible();
-  await navigation.getByRole('link', { name: /^Button/ }).click();
+  await navigation.getByRole('link', { name: '按钮', exact: true }).click();
   await expect(navigation).toBeHidden();
   await expect(page).toHaveURL(/#actions$/);
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
