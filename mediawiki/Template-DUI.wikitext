@@ -3,8 +3,10 @@
 |class=dui-widget
 |data-dui={{{组件|button}}}
 |data-dui-props={{{参数|}}}
+|data-dui-assets={{{素材|}}}
 }}</includeonly><noinclude>
 用法：
 <pre>{{DUI|组件=button|参数={"label":"开始游戏"}|后备文字=开始游戏}}</pre>
 参数填写 JSON。界面脚本由管理员通过 Common.js 或 Gadget 安装。
+可用「素材」覆盖单个组件的文件，例如 <code>{"items/lighter.png":"File:自定义打火机.png"}</code>。
 </noinclude>

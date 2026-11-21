@@ -5,16 +5,22 @@ export const componentNames = [
 ] as const;
 export type WidgetName = typeof componentNames[number];
 export type WidgetChild = string | number | null | WidgetNode | WidgetChild[];
+export type WikiAssetMap = Readonly<Record<string, string>>;
 export interface WidgetNode {
   component: WidgetName;
   props?: Record<string, unknown>;
   children?: WidgetChild;
+  /** Optional overrides for the mounted widget tree. */
+  assets?: WikiAssetMap;
 }
 export interface WikiOptions {
   /** Directory containing dui.js, dui.css and assets/. Ends in a slash. */
   baseUrl?: string;
   sound?: boolean;
   volume?: number;
+  /** Default to true on the DOORS Wiki hosts. */
+  preferWikiAssets?: boolean;
+  wikiAssets?: WikiAssetMap;
 }
 export interface WidgetHandle {
   element: HTMLElement;

@@ -6,6 +6,7 @@ import {
   type DoorsIconName, type InventoryItem,
 } from '../components';
 import { boolean, choice, list, number, read, record, required, text } from './validation';
+import { wikiFile } from './wikiAssets';
 import type { WidgetChild, WidgetEventDetail, WidgetNode } from './types';
 
 const icon = choice(Object.keys(doorsIconAssets) as DoorsIconName[]);
@@ -14,7 +15,7 @@ const size = choice(['sm', 'md']);
 const gap = choice(['none', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl']);
 const currency = choice(['knobs', 'gold', 'revive', 'candy']);
 const lobbyIcon = choice([...Object.keys(doorsIconAssets), 'codes'] as (DoorsIconName | 'codes')[]);
-const slotSchema = { icon, label: text, count: number, selected: boolean, disabled: boolean,
+const slotSchema = { icon, file: wikiFile, label: text, count: number, selected: boolean, disabled: boolean,
   size, shape: choice(['square', 'circle']), charge: number };
 
 function inventoryItem(value: unknown): InventoryItem {
@@ -50,8 +51,10 @@ export function WidgetView({ node, host, emit }: ViewProps) {
         fullWidth={a.fullWidth} onClick={() => action(a.action ?? 'click')}>{children ?? a.label ?? '按钮'}</Button>;
     }
     case 'icon': {
-      const a = read(p, { name: icon, alt: text, size: choice([16, 20, 24, 32, 48, 64]), tone: choice(['inherit', 'cream', 'muted', 'accent', 'danger']) });
-      return <Icon {...a} name={required(a.name, 'name')} />;
+      const a = read(p, { name: icon, file: wikiFile, alt: text, mask: boolean,
+        size: choice([16, 20, 24, 32, 48, 64]), tone: choice(['inherit', 'cream', 'muted', 'accent', 'danger']) });
+      if (!a.file) required(a.name, 'name');
+      return <Icon {...a} />;
     }
     case 'lobby-icon': {
       const a = read(p, { icon: lobbyIcon, label: text, disabled: boolean });

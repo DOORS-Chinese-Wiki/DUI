@@ -1,4 +1,5 @@
 import { componentNames, type WidgetChild, type WidgetNode } from './types';
+import { wikiAssetMap } from './wikiAssets';
 
 export function record(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('需要 JSON 对象');
@@ -71,7 +72,10 @@ export function validateNode(input: unknown): WidgetNode {
         return { ...tab, content: child(tab.content, depth + 1) };
       });
     }
-    return { component: node.component as WidgetNode['component'], props, children: child(node.children, depth + 1) };
+    return {
+      component: node.component as WidgetNode['component'], props, children: child(node.children, depth + 1),
+      ...(depth === 0 && node.assets !== undefined ? { assets: wikiAssetMap(node.assets) } : {}),
+    };
   }
   const node = child(input, 0);
   if (!node || typeof node !== 'object' || Array.isArray(node)) throw new Error('根节点需要组件对象');
@@ -80,7 +84,8 @@ export function validateNode(input: unknown): WidgetNode {
 
 export function parseElement(element: HTMLElement): WidgetNode {
   const source = element.dataset.duiProps?.trim() || '{}';
-  if (source.length > 65536) throw new Error('配置不得超过 64 KiB');
+  const assets = element.dataset.duiAssets?.trim();
+  if (source.length + (assets?.length ?? 0) > 65536) throw new Error('配置不得超过 64 KiB');
   const props = record(JSON.parse(source));
-  return validateNode({ component: element.dataset.dui, props, children: props.children });
+  return validateNode({ component: element.dataset.dui, props, children: props.children, assets: assets ? JSON.parse(assets) : undefined });
 }

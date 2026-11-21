@@ -5,7 +5,7 @@ import {
   useMemo,
   type ReactNode,
 } from 'react';
-import { useAssetUrl } from '../assets/AssetProvider';
+import { usePreferredAsset } from '../assets/AssetProvider';
 
 export type InteractionSound = 'hover' | 'leave' | 'press' | 'click';
 
@@ -41,11 +41,10 @@ export function SoundProvider({
   volume = 0.42,
   sounds,
 }: SoundProviderProps) {
-  const assetUrl = useAssetUrl();
-  const sources = useMemo(
-    () => ({ ...DEFAULT_SOUNDS, ...sounds }),
-    [sounds],
-  );
+  const hover = usePreferredAsset(enabled ? sounds?.hover ?? DEFAULT_SOUNDS.hover : undefined, 'audio');
+  const leave = usePreferredAsset(enabled ? sounds?.leave ?? DEFAULT_SOUNDS.leave : undefined, 'audio');
+  const press = usePreferredAsset(enabled ? sounds?.press ?? DEFAULT_SOUNDS.press : undefined, 'audio');
+  const click = usePreferredAsset(enabled ? sounds?.click ?? DEFAULT_SOUNDS.click : undefined, 'audio');
 
   const play = useCallback(
     (sound: InteractionSound) => {
@@ -54,14 +53,22 @@ export function SoundProvider({
       }
 
       try {
-        const audio = new Audio(assetUrl(sources[sound]));
+        const { url, fallback } = { hover, leave, press, click }[sound];
+        if (!url) return;
+        const audio = new Audio(url);
         audio.volume = Math.min(1, Math.max(0, volume));
+        if (fallback && fallback !== url) {
+          audio.addEventListener('error', () => {
+            audio.src = fallback;
+            void audio.play()?.catch(() => undefined);
+          }, { once: true });
+        }
         void audio.play()?.catch(() => undefined);
       } catch {
         // Audio feedback is optional and must never block an interaction.
       }
     },
-    [enabled, sources, volume, assetUrl],
+    [enabled, hover, leave, press, click, volume],
   );
 
   const value = useMemo(() => ({ enabled, play }), [enabled, play]);

@@ -14,8 +14,8 @@ npm run pack:mediawiki
 输出：
 
 - `dist-mediawiki/`：可直接部署的目录。
-- `artifacts/dui-mediawiki-0.1.1.zip`：静态部署压缩包。
-- `artifacts/dui-mediawiki-0.1.1.tgz`：可用 `npm install /绝对路径/文件.tgz` 本地安装的包；未发布到 npm。
+- `artifacts/dui-mediawiki-0.1.2.zip`：静态部署压缩包。
+- `artifacts/dui-mediawiki-0.1.2.tgz`：可用 `npm install /绝对路径/文件.tgz` 本地安装的包。
 
 GitHub Pages 已托管可直接加载的版本：`https://doors-chinese-wiki.github.io/DUI/mediawiki/`。下面的安装配置使用这个地址。需要自行托管时，解压 ZIP，把 `dui-mediawiki` 目录内的全部文件放到静态目录，保留子目录结构，再访问其中的 `index.html` 检查图标和字体。
 
@@ -84,6 +84,35 @@ JSON 文本中如果需要字面量 `|`，在模板参数中写成 `{{!}}`。不
 
 更多可复制的物品栏、大厅、弹窗和成就例子在 `integration/examples.wikitext`。
 
+## 使用 Wiki 文件
+
+英文和中文 DOORS Wiki 默认从当前站点查找图标、物品图片、成就徽章和已启用的交互音效。MediaWiki 优先解析本站上传的文件，也能返回本站接入的共享文件。DUI 按 `file`、组件素材配置、站点配置、DOORS Wiki 默认文件、随包素材的顺序找图。文件缺失或图片加载失败时，接着尝试下一级来源。
+
+`icon`、`item-slot` 和 `inventory` 中的单个物品都可以用 `file` 指定文件。保留 `name` 或 `icon` 可以提供后备图。若要保留原图颜色，可在 `icon` 上设置 `mask: false`。
+
+```wikitext
+{{DUI|组件=inventory
+|参数={"items":[{"id":"lighter","icon":"lighter","file":"File:Icon lighter2.png","label":"打火机"}]}
+|后备文字=物品栏：打火机
+}}
+```
+
+要替换整组组件里使用的素材，可以在更新后的模板加 `素材={"icons/settings.svg":"File:Settings icon.svg"}`。直接写 HTML 时，用 `data-dui-assets` 存放同一份 JSON。通过 `DUI.mount` 挂载时，在组件对象顶层传 `assets`。这些配置都只作用于当前挂载的组件及其子组件。
+
+管理员可以在引导脚本前设置全站素材，也可以通过 `DUI.configure({ wikiAssets: ... })` 更新。
+
+```js
+window.DUIConfig = {
+  ...window.DUIConfig,
+  wikiAssets: {
+    'items/lighter.png': 'File:Icon lighter2.png',
+    'audio/hover.mp3': 'File:SoundHover.mp3'
+  }
+};
+```
+
+素材键填写包内 `assets/doors/` 之后的相对路径。值填写本 Wiki 的文件名，可以带 `File:` 或 `文件:` 前缀。`preferWikiAssets: false` 可关闭 DOORS Wiki 的默认映射。其他 MediaWiki 站点也可使用 `file` 和 `wikiAssets` 指定自己的文件。字体与背景由站点 CSS 设置。
+
 ## 组件参数
 
 这些入口调用项目中同一套 React 组件。下表列出 Wiki 页面可以传入的参数。
@@ -91,7 +120,7 @@ JSON 文本中如果需要字面量 `|`，在模板参数中写成 `{{!}}`。不
 | `data-dui` | 主要 JSON 参数 |
 | --- | --- |
 | `button` | `label`、`variant`、`size`、`disabled`、`loading`、`fullWidth`、`action` |
-| `icon` | 素材 `name`、`alt`、`size`、`tone` |
+| `icon` | `name`、`file`、`alt`、`size`、`tone`、`mask` |
 | `lobby-icon` | `icon`（素材名或 `codes`）、`label`、`disabled` |
 | `lobby` | `showStore`、`items`（图标名数组）、`label` |
 | `text` | `text`、`variant`、`tone`、`align`、`truncate`、`as`（仅 span/p/strong/em/h2/h3/code） |
@@ -106,8 +135,8 @@ JSON 文本中如果需要字面量 `|`，在模板参数中写成 `{{!}}`。不
 | `panel` | `title`、`description`、`footer`（文本）、`closable`、`closeLabel`、`children` |
 | `panel-section` | `title`、`children` |
 | `tabs` | `label`、`defaultValue`、`items`：每项 `value`、`label`、`disabled`、`content`（子节点） |
-| `item-slot` | `icon`、`label`、`count`、`shortcut`（文本）、`selected`、`disabled`、`size`、`shape`、`charge` |
-| `inventory` | `label`、`defaultValue`（id 或 null）、`items`：每项唯一 `id`、`icon`、`label`、`count`、`disabled`、`size`、`shape`、`charge` |
+| `item-slot` | `icon`、`file`、`label`、`count`、`shortcut`（文本）、`selected`、`disabled`、`size`、`shape`、`charge` |
+| `inventory` | `label`、`defaultValue`（id 或 null）、`items`：每项唯一 `id`，以及 `icon`、`file`、`label`、`count`、`disabled`、`size`、`shape`、`charge` |
 | `currency` | `kind`（knobs/gold/revive/candy）、`value`、`label`、`size`、`showLabel` |
 | `currency-group` | `children` |
 | `shop-item` | `item`（素材名）、`name`、`description`、`price`、`currency`、`owned`、`available`、`disabled` |

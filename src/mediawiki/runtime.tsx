@@ -1,15 +1,17 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { AssetProvider, SoundProvider } from '../components';
+import type { AssetLookup } from '../assets/AssetProvider';
 import packageInfo from '../../package.json';
 import { WidgetView } from './WidgetView';
 import { parseElement, validateNode } from './validation';
+import { createWikiAssetLookup, wikiAssetMap } from './wikiAssets';
 import type { WidgetEventDetail, WidgetHandle, WidgetNode, WikiOptions } from './types';
 
 export const version: string = packageInfo.version;
 const selector = '.dui-widget[data-dui]';
 let options: WikiOptions = { sound: false, volume: 0.42 };
-interface Mounted { root: Root; node: WidgetNode; revision: number; fallback: Node[]; hadScope: boolean; handle: WidgetHandle }
+interface Mounted { root: Root; node: WidgetNode; revision: number; fallback: Node[]; hadScope: boolean; handle: WidgetHandle; assetLookup: AssetLookup }
 const mounted = new Map<HTMLElement, Mounted>();
 
 function report(host: HTMLElement, error: unknown) {
@@ -26,7 +28,7 @@ function render(host: HTMLElement, entry: Mounted) {
   const emit = (detail: WidgetEventDetail) => host.dispatchEvent(new CustomEvent('dui:action', { bubbles: true, detail }));
   host.dataset.duiState = 'ready';
   entry.root.render(<Boundary key={entry.revision} host={host}>
-    <AssetProvider baseUrl={options.baseUrl}><SoundProvider enabled={options.sound} volume={options.volume}>
+    <AssetProvider baseUrl={options.baseUrl} lookup={entry.assetLookup}><SoundProvider enabled={options.sound} volume={options.volume}>
       <WidgetView node={entry.node} host={host} emit={emit} />
     </SoundProvider></AssetProvider>
   </Boundary>);
@@ -47,8 +49,17 @@ export function configure(next: WikiOptions): Readonly<WikiOptions> {
     if (!Number.isFinite(next.volume) || next.volume < 0 || next.volume > 1) throw new Error('volume 需要 0–1 的数值');
     resolved.volume = next.volume;
   }
+  if (next.preferWikiAssets !== undefined) {
+    if (typeof next.preferWikiAssets !== 'boolean') throw new Error('preferWikiAssets 需要布尔值');
+    resolved.preferWikiAssets = next.preferWikiAssets;
+  }
+  if (next.wikiAssets !== undefined) resolved.wikiAssets = wikiAssetMap(next.wikiAssets);
+  const assetConfigChanged = resolved.preferWikiAssets !== options.preferWikiAssets || resolved.wikiAssets !== options.wikiAssets;
   options = resolved;
-  for (const [host, entry] of mounted) render(host, entry);
+  for (const [host, entry] of mounted) {
+    if (assetConfigChanged) entry.assetLookup = createWikiAssetLookup(options, entry.node.assets);
+    render(host, entry);
+  }
   return Object.freeze({ ...options });
 }
 
@@ -58,7 +69,7 @@ export function mount(element: HTMLElement, config: WidgetNode): WidgetHandle {
   const existing = mounted.get(element);
   if (existing) { existing.handle.update(node); return existing.handle; }
   const entry: Mounted = {
-    root: createRoot(element), node, revision: 0,
+    root: createRoot(element), node, revision: 0, assetLookup: createWikiAssetLookup(options, node.assets),
     fallback: Array.from(element.childNodes, child => child.cloneNode(true)),
     hadScope: element.classList.contains('dui-scope'),
     handle: {
@@ -66,6 +77,7 @@ export function mount(element: HTMLElement, config: WidgetNode): WidgetHandle {
       update(next) {
         if (!mounted.has(element)) throw new Error('组件已卸载，请重新 mount');
         entry.node = validateNode(next);
+        entry.assetLookup = createWikiAssetLookup(options, entry.node.assets);
         entry.revision++;
         render(element, entry);
       },
@@ -108,7 +120,7 @@ type ContentHook = { add(callback: (content: { 0?: HTMLElement }) => void): void
 declare global {
   interface Window {
     DUIConfig?: WikiOptions;
-    mw?: { hook(name: string): ContentHook };
+    mw?: { hook(name: string): ContentHook; config?: { get(name: string): unknown } };
   }
 }
 let stop: (() => void) | undefined;
